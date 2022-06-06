@@ -14,10 +14,10 @@ class CreateMemosTable extends Migration
     public function up()
     {
         Schema::create('memos', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('employee_id_pengirim');
-            $table->unsignedBigInteger('employee_id_penerima');
-            $table->unsignedBigInteger('meeting_id')->nullabe();
+            $table->uuid('id', 36)->primary();
+            $table->uuid('employee_id_pengirim');
+            $table->uuid('employee_id_penerima');
+            $table->uuid('meeting_id')->nullabe();
             $table->string('judul');
             $table->string('deskripsi');
             $table->date('tanggal');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Employee extends Model
 {
@@ -17,11 +18,22 @@ class Employee extends Model
         'avatar'
 
     ];
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public static function boot(){
+        parent::boot();
+
+        static::creating(function ($issue) {
+            $issue->id = Str::uuid(36);
+        });
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }
-    public function departemen(){
-        return $this->belongsTo(Departemen::class);
+    public function department(){
+        return $this->belongsTo(Department::class);
     }
     public function meeting(){
         return $this->hasMany(Meeting::class,'employee_id','id');

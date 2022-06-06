@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\AuthController as ApiAuthController;
+use App\Http\Controllers\api\CustomerController;
+use App\Http\Controllers\api\DepartmentController;
 use App\Http\Controllers\Customer\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\DepartementController;
@@ -19,22 +22,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
+Route::post('register/admin', [ApiAuthController::class, 'registerAdmin']);
+Route::post('register/customer', [CustomerController::class, 'register']);
+Route::post('login/admin', [ApiAuthController::class, 'loginAdmin']);
+Route::post('login/customer', [CustomerController::class, 'login']);
 
-Route::group(['middleware'=>'auth:api'],function(){
-    Route::get('/departemen',[DepartementController::class,'index']);
-    Route::post('/departemen',[DepartementController::class,'store']);
-    Route::get('/departemen/{id}', [DepartementController::class, 'show']);
-    Route::post('/departemen/edit/{departemen}',[DepartementController::class,'update']);
-    Route::delete('/departemen/{id}',[DepartementController::class,'destroy']);
-    Route::post('/category',[CategoryController::class,'store']);
-    Route::get('/category',[CategoryController::class,'index']);
-    Route::get('/category/{id}', [CategoryController::class, 'show']);
-    Route::post('/category/edit/{category}',[CategoryController::class,'update']);
-    Route::delete('/category/{id}',[CategoryController::class,'destroy']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('department', [DepartmentController::class, 'index']);
+    Route::get('department/{id}', [DepartmentController::class, 'show']);
+    Route::get('logout', [CustomerController::class, 'logout']);
+    Route::post('department/add', [DepartmentController::class, 'add']);
+    Route::post('department/edit/{department}', [DepartmentController::class, 'update']);
+    Route::delete('department/delete/{department}', [DepartmentController::class, 'delete']);
+    Route::get('customer/{id}', [CustomerController::class, 'show']);
+    Route::post('customer/edit/{customer}', [CustomerController::class, 'update']);
 
 });
-
 
 

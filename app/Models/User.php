@@ -6,7 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -20,7 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
-        'role'
+        'role_id'
 
     ];
 
@@ -34,6 +35,19 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
+public $incrementing = false;
+
+protected $keyType = 'string';
+
+public static function boot(){
+    parent::boot();
+
+    static::creating(function ($issue) {
+        $issue->id = Str::uuid(36);
+    });
+}
+
     /**
      * The attributes that should be cast.
      *
@@ -43,6 +57,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getRoleNameAttribute()
+    {
+        return $this->roles->name;
+    }
+
     public function customer()
     {
         return $this->hasOne(Customer::class,'user_id','id');
@@ -50,5 +69,9 @@ class User extends Authenticatable
     public function employee()
     {
         return $this->hasOne(Employee::class,'user_id','id');
+    }
+    public function roles()
+    {
+        return $this->hasOne(Roles::class,'id','role_id');
     }
 }

@@ -14,9 +14,9 @@ class CreateComplaintsTable extends Migration
     public function up()
     {
         Schema::create('complaints', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('cust_id');
-            $table->unsignedBigInteger('category_id');
+            $table->uuid('id', 36)->primary();
+            $table->uuid('cust_id');
+            $table->uuid('category_id');
             $table->integer('type');
             $table->string('judul');
             $table->string('deskripsi');

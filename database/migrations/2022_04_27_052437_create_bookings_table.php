@@ -14,11 +14,11 @@ class CreateBookingsTable extends Migration
     public function up()
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('cust_id');
-            $table->unsignedBigInteger('product_id');
+            $table->uuid('id', 36)->primary();
+            $table->uuid('cust_id');
+            $table->uuid('product_id');
             $table->string('bukti');
-            $table->unsignedBigInteger('status')->nullable();
+            $table->uuid('status')->nullable();
             $table->timestamps();
             $table->foreign('cust_id')
                   ->references('id')->on('customers')

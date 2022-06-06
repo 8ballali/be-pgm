@@ -14,11 +14,11 @@ class CreateMeetingsTable extends Migration
     public function up()
     {
         Schema::create('meetings', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id', 36)->primary();
             $table->date('tanggal');
             $table->string('judul');
             $table->string('notulensi');
-            $table->unsignedBigInteger('employee_id');
+            $table->uuid('employee_id');
             $table->foreign('employee_id')
             ->references('id')->on('employees')
             ->onDelete('cascade');

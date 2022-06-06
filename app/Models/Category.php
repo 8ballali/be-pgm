@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -12,12 +13,22 @@ class Category extends Model
     protected $fillable = [
         'name',
         'dept_id'];
+        public $incrementing = false;
 
+        protected $keyType = 'string';
+
+        public static function boot(){
+            parent::boot();
+
+            static::creating(function ($issue) {
+                $issue->id = Str::uuid(36);
+            });
+        }
     public function complaint(){
      return $this->hasMany(Complaint::class,'category_id','id');
      }
 
-     public function departemen(){
-        return $this->belongsTo(Departemen::class);
+     public function departmen(){
+        return $this->belongsTo(Department::class);
     }
 }

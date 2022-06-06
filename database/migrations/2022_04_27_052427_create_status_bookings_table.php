@@ -14,7 +14,7 @@ class CreateStatusBookingsTable extends Migration
     public function up()
     {
         Schema::create('status_bookings', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id', 36)->primary();
             $table->string('name');
             $table->timestamps();
         });

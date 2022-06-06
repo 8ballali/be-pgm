@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class history_memo extends Model
 {
@@ -14,6 +15,17 @@ class history_memo extends Model
         'catatan',
         'bukti'
     ];
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public static function boot(){
+        parent::boot();
+
+        static::creating(function ($issue) {
+            $issue->id = Str::uuid(36);
+        });
+    }
     public function memo(){
         return $this->belongsTo(Memo::class);
     }

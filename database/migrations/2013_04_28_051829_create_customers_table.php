@@ -14,13 +14,13 @@ class CreateCustomersTable extends Migration
     public function up()
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id', 36)->primary();
             $table->string('nik');
             $table->string('name');
             $table->string('address');
             $table->string('avatar');
             $table->string('phone');
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('user_id');
             $table->timestamps();
             $table->foreign('user_id')
                   ->references('id')->on('users')

@@ -14,8 +14,8 @@ class CreateHistoryMemosTable extends Migration
     public function up()
     {
         Schema::create('history_memos', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('memo_id');
+            $table->uuid('id', 36)->primary();
+            $table->uuid('memo_id');
             $table->string('catatan');
             $table->string('bukti');
             $table->timestamps();

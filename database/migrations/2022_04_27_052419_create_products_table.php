@@ -14,7 +14,7 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id', 36)->primary();
             $table->string('blok');
             $table->integer('no_kavling')->unsigned();
             $table->integer('type');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Booking extends Model
 {
@@ -15,6 +16,17 @@ class Booking extends Model
         'bukti',
         'status'
     ];
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public static function boot(){
+        parent::boot();
+
+        static::creating(function ($issue) {
+            $issue->id = Str::uuid(36);
+        });
+    }
     public function product(){
         return $this->belongsTo(Product::class);
     }

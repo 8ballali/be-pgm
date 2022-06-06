@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Complaint extends Model
 {
@@ -21,6 +22,17 @@ class Complaint extends Model
         'feedback_score',
         'feedback_deskripsi'
     ];
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public static function boot(){
+        parent::boot();
+
+        static::creating(function ($issue) {
+            $issue->id = Str::uuid(36);
+        });
+    }
     public function customer(){
         return $this->belongsTo(Customer::class);
     }
