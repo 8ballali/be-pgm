@@ -45,6 +45,7 @@ class AuthController extends Controller
             ], 400);
         }
     }
+
     public function loginAdmin(Request $request)
     {
         try {
