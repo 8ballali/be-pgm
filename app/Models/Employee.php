@@ -29,11 +29,18 @@ class Employee extends Model
             $issue->id = Str::uuid(36);
         });
     }
+    public function getAvatarUrlAttribute(){
+        return url('storage/'. $this->avatar);
+    }
+    protected $appends = [
+        'avatar_url',
+
+    ];
     public function user(){
         return $this->belongsTo(User::class);
     }
     public function department(){
-        return $this->belongsTo(Department::class);
+        return $this->hasOne(Department::class, 'id', 'dept_id');
     }
     public function meeting(){
         return $this->hasMany(Meeting::class,'employee_id','id');

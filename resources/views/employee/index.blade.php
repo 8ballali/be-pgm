@@ -68,7 +68,7 @@
               <label><b>*Jika tidak ada kosongkan saja</b></label>
             </div>
           </div>
-          <div class="form-group">
+          {{-- <div class="form-group">
             <label for="message-text" class="col-form-label">Departemen</label>
             <div>
               <select name='dept_id' class='form-control'>
@@ -80,7 +80,7 @@
                 @endforeach
               </select>
             </div>
-          </div>
+          </div> --}}
           <div class="form-group text-center">
             <button id="btn" type="submit" class="btn btn-block">Submit</button>
           </div>
@@ -142,7 +142,7 @@
               <label><b>*Jika tidak ada kosongkan saja</b></label>
             </div>
           </div>
-          <div class="form-group">
+          {{-- <div class="form-group">
             <label for="message-text" class="col-form-label">Departemen</label>
             <div>
               <select name='dept_id' id="dept_id" class='form-control'>
@@ -154,7 +154,7 @@
                 @endforeach
               </select>
             </div>
-          </div>
+          </div> --}}
           <div class="form-group text-center">
             <button id="btn" type="submit" class="btn btn-block">Submit</button>
           </div>
@@ -187,21 +187,27 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($data_employee as $employee)
+              @foreach($employee as $e)
               <tr>
-                <td>{{$employee->email}}</td>
-                <td>{{$employee->name}}</td>
-                <td>{{$employee->address}}</td>
-                <td>{{$employee->phone}}</td>
+                <td>{{$e->user->email}}</td>
+                <td>{{$e->name}}</td>
+                <td>{{$e->address}}</td>
+                <td>{{$e->phone}}</td>
+                <td><img src="{{ url('storage').'/'.$e->image }}" height="40px" width="40px" />
                 <td>
+                    {{$e->department->name}}
+                </td>
+
+
+                {{-- <td>
                   @if($employee->avatar)
                   <img src="{{ asset('avatar/'.$employee->avatar) }}" alt="avatar" class="avatar" />
                   @else
                   <img src="{{ asset('avatar/user.png') }}" alt="avatar" class="avatar" />
                   @endif
-                </td>
-                <td>{{$employee->dept_name}}</td>
-                <td>
+                </td> --}}
+                {{-- <td>{{$employee->dept_name}}</td> --}}
+                {{-- <td>
                 <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" href="#">
                     <span class="btn-label"><i class="far fa-edit"></i></span>
                   </a>
@@ -210,7 +216,7 @@
                     <button class="btn btn-circle btn-lg btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini ?')">
                       <i class="fa fa-trash"></i></button>
                   </form>
-                </td>
+                </td> --}}
               </tr>
               @endforeach
             </tbody>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Departemen;
+use App\Models\Department;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -57,12 +58,12 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $data_employee = DB::select("SELECT users.id,email,name,address,phone,avatar,dept_name FROM users
-            LEFT JOIN (SELECT employees.*, departemens.name AS dept_name FROM employees
-            INNER JOIN departemens ON employees.dept_id=departemens.id) employees ON employees.user_id=users.id
-            WHERE users.role='EMPLOYEE'");
-        $data_departemen = Departemen::all();
-        return view('employee.index', compact('data_employee', 'data_departemen'));
+        $user = User::where('role_id', '2');
+        $employee = Employee::get();
+        $department = Department::all();
+        // dd($employee);
+        return view('employee.index', compact('employee', 'user', 'department'));
+
     }
 
     public function update(Request $request, $id){

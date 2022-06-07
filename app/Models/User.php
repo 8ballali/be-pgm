@@ -74,4 +74,15 @@ public static function boot(){
     {
         return $this->hasOne(Roles::class,'id','role_id');
     }
+    public function isAdmin()
+    {
+        if($this->role_id === 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

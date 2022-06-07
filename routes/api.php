@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\AuthController as ApiAuthController;
 use App\Http\Controllers\api\CustomerController;
 use App\Http\Controllers\api\DepartmentController;
+use App\Http\Controllers\api\EmployeeController;
 use App\Http\Controllers\Customer\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\DepartementController;
@@ -26,6 +27,8 @@ Route::post('register/admin', [ApiAuthController::class, 'registerAdmin']);
 Route::post('register/customer', [CustomerController::class, 'register']);
 Route::post('login/admin', [ApiAuthController::class, 'loginAdmin']);
 Route::post('login/customer', [CustomerController::class, 'login']);
+Route::post('register/employee', [EmployeeController::class, 'register']);
+Route::post('login/employee', [EmployeeController::class, 'login']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -33,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('department', [DepartmentController::class, 'index']);
     Route::get('department/{id}', [DepartmentController::class, 'show']);
     Route::get('logout', [CustomerController::class, 'logout']);
+    Route::get('admin/logout', [ApiAuthController::class, 'logout']);
     Route::post('department/add', [DepartmentController::class, 'add']);
     Route::post('department/edit/{department}', [DepartmentController::class, 'update']);
     Route::delete('department/delete/{department}', [DepartmentController::class, 'delete']);
