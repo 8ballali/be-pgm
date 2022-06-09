@@ -62,6 +62,7 @@ public static function boot(){
         return $this->roles->name;
     }
 
+
     public function customer()
     {
         return $this->hasOne(Customer::class,'user_id','id');
@@ -74,15 +75,5 @@ public static function boot(){
     {
         return $this->hasOne(Roles::class,'id','role_id');
     }
-    public function isAdmin()
-    {
-        if($this->role_id === 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+
 }

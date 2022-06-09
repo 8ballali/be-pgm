@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -61,8 +62,10 @@ class EmployeeController extends Controller
         $user = User::where('role_id', '2');
         $employee = Employee::get();
         $department = Department::all();
-        // dd($employee);
-        return view('employee.index', compact('employee', 'user', 'department'));
+        $logged = Auth::user();
+        // dd($logged);
+        return view('employee.index', compact('employee', 'user', 'department', ));
+        return view('layouts.app', compact('employee', 'user', 'department', 'logged'));
 
     }
 
@@ -97,11 +100,10 @@ class EmployeeController extends Controller
         $user->save();
         return redirect()->back();
     }
-    public function destroy($id){
-        $user = User::find($id);
-        $employee = Employee::all();
-        $user->employee()->where('user_id', $id)->delete();
-        $user->delete();
-        return redirect()->back();
+    public function delete($user_id)
+    {
+        $user = User::all();
+        $employee = Employee::where($user_id, 'user_id')->delete();
+        return redirect('/employee');
     }
 }

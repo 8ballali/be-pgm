@@ -55,19 +55,19 @@
                         <form class="mt-4">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form action="{{route('login')}}" method="get">
+                                    <form action="{{route('login')}}" method="post">
                                         {{ csrf_field() }}
-                                        <h1>Sign in</h1>
-                                        <input type="email" name="email" class="form-control" placeholder="Email">
-                                        <input type="password" name="password"  class="form-control" placeholder="Password" >
 
-                                        <button>Sign In</button>
+                                        <input type="email" name="email" class="form-control" placeholder="Email">
+                                        <input type="password" name="password" class="form-control" placeholder="Password" >
+
+
+                                        <button type="submit" class="btn btn-block" style="background-color:#EB6123; color:#fff;">Sign in</button>
                                     </form>
-                                <div class="col-lg-12 text-center">
-                                    <button type="submit" class="btn btn-block" style="background-color:#EB6123; color:#fff;">Sign in</button>
-                                </div>
+                                    <div class="col-lg-12 text-center mt-3">
+                                    </div>
                                 <div class="col-lg-12 text-center mt-5">
-                                    {{-- Don't have an account? <a href="#" class="text-danger">Sign Up</a> --}}
+                                    Don't have an account? <a href="#" class="text-danger">Sign Up</a>
                                 </div>
 
                             </div>

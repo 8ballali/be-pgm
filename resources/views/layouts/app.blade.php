@@ -166,7 +166,7 @@
                                     class="hide-menu">Customer
                                 </span></a>
                         </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="#"
+                        <li class="sidebar-item" > <a class="sidebar-link" href="{{ url('/department') }}"
                                 aria-expanded="false"><i data-feather="globe" class="feather-icon"></i><span
                                     class="hide-menu">Departemen
                                 </span></a>

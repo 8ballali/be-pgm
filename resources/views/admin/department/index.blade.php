@@ -177,42 +177,26 @@
           <table id="multi_col_order" class="table table-striped table-bordered display no-wrap" style="width:100%">
             <thead>
               <tr>
-                <th>Email</th>
                 <th>Name</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Avatar</th>
-                <th>Departemen</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($employee as $e)
-
-
-
+              @foreach($department as $d)
               <tr>
-                <td>{{$e->user->email}}</td>
-                <td>{{$e->name}}</td>
-                <td>{{$e->address}}</td>
-                <td>{{$e->phone}}</td>
-                <td><img src="{{ url('storage').'/'.$e->image }}" height="40px" width="40px" />
-                <td>
-                    {{$e->department->name}}
-                </td>
+                <td>{{$d->name}}</td>
 
                 <td>
                 <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" href="#">
                     <span class="btn-label"><i class="far fa-edit"></i></span>
                   </a>
-                  <form method="post" href="{{url('/employee/delete/'.$e->id)}}">
+                  <form method="post" action="{{ route('employee.destroy', $d->id) }}">
                     @csrf
                     <button class="btn btn-circle btn-lg btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini ?')">
                       <i class="fa fa-trash"></i></button>
                   </form>
                 </td>
               </tr>
-
               @endforeach
             </tbody>
           </table>

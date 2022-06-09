@@ -13,13 +13,13 @@ class AuthController extends Controller
     public function index()
     {
 
-        return view('admin.login');
+        return view('admin.form-login');
 
     }
     public function login(Request $request)
     {
 
-        if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect('/employee');
         }else {
             return redirect('/');
@@ -29,7 +29,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::guard('admin')->logout();
+        Auth::logout();
         return redirect('/');
 
     }
