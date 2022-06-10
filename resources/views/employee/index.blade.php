@@ -196,7 +196,7 @@
                 <td>{{$e->name}}</td>
                 <td>{{$e->address}}</td>
                 <td>{{$e->phone}}</td>
-                <td><img src="{{ url('storage').'/'.$e->image }}" height="40px" width="40px" />
+                <td><img src="{{ url('storage').'/'.$e->avatar }}" height="40px" width="40px" />
                 <td>
                     {{$e->department->name}}
                 </td>
@@ -205,10 +205,14 @@
                 <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" href="#">
                     <span class="btn-label"><i class="far fa-edit"></i></span>
                   </a>
-                  <form method="post" href="{{url('/employee/delete/'.$e->id)}}">
+                  <form method="post" action="{{url('employee/delete/'.$e->user_id)}}">
+                    @method('DELETE')
                     @csrf
+                    @if (Auth::user()->role_id == 1)
                     <button class="btn btn-circle btn-lg btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini ?')">
-                      <i class="fa fa-trash"></i></button>
+                        <i class="fa fa-trash"></i></button>
+                    @endif
+
                   </form>
                 </td>
               </tr>

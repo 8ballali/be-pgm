@@ -171,7 +171,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Employee Table</h4>
+        <h4 class="card-title">Departemen Table</h4>
 
         <div class="table-responsive">
           <table id="multi_col_order" class="table table-striped table-bordered display no-wrap" style="width:100%">
