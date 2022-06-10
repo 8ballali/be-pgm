@@ -49,16 +49,31 @@
               <input type="text" class="form-control" name="name" placeholder="Name">
             </div>
           </div>
+
           <div class="form-group">
             <label for="message-text" class="col-form-label">Address</label>
             <div>
               <textarea class="form-control" name="address"></textarea>
             </div>
           </div>
+
           <div class="form-group">
             <label for="message-text" class="col-form-label">Phone</label>
             <div>
               <input type="text" class="form-control" name="phone" placeholder="Phone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Departemen</label>
+            <div>
+              <select name='dept_id' class='form-control'>
+                @foreach($department as $dept)
+                <option hidden value="">
+                  <center>-- Pilih --</center>
+                </option>
+                <option value="{{$dept->id}}">{{$dept->name}}</option>
+                @endforeach
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -105,28 +120,18 @@
       <div class="modal-body">
         <form id="editform" role="form text-left" method="post" action="{{ route('employee.update', '$employee->id') }}" enctype="multipart/form-data">
           {{csrf_field()}}
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Email</label>
-            <div>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Password</label>
-            <div>
-              <input type="password" class="form-control" name="password" id="passworrd" passplaceholder="password">
-            </div>
-          </div>
+          {{ method_field('PUT') }}
+
           <div class="form-group">
             <label for="message-text" class="col-form-label">Name</label>
             <div>
-              <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+              <input type="text" class="form-control" name="name" id="name"  value="">
             </div>
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Address</label>
+            <label for="message-text" class="col-form-label" >Address</label>
             <div>
-              <textarea class="form-control" name="address" id="address"></textarea>
+              <textarea class="form-control" name="address" id="address" value=""></textarea>
             </div>
           </div>
           <div class="form-group">
@@ -142,11 +147,11 @@
               <label><b>*Jika tidak ada kosongkan saja</b></label>
             </div>
           </div>
-          {{-- <div class="form-group">
+          <div class="form-group">
             <label for="message-text" class="col-form-label">Departemen</label>
             <div>
               <select name='dept_id' id="dept_id" class='form-control'>
-                @foreach($data_departemen as $dept)
+                @foreach($department as $dept)
                 <option hidden value="">
                   <center>-- Pilih --</center>
                 </option>
@@ -154,7 +159,7 @@
                 @endforeach
               </select>
             </div>
-          </div> --}}
+          </div>
           <div class="form-group text-center">
             <button id="btn" type="submit" class="btn btn-block">Submit</button>
           </div>
@@ -202,7 +207,7 @@
                 </td>
 
                 <td>
-                <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" href="#">
+                    <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" href="#">
                     <span class="btn-label"><i class="far fa-edit"></i></span>
                   </a>
                   <form method="post" action="{{url('employee/delete/'.$e->user_id)}}">

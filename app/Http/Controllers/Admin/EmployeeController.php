@@ -48,26 +48,12 @@ class EmployeeController extends Controller
             'name' => $request->name,
             'address' => $request->address,
             'phone' => $request->phone,
-            'dept_id' => $request->nik,
+            'dept_id' => $request->dept_id,
             'user_id' => $register->id,
             'avatar' => $avatar,
 
         ]);
-        if ($register) {
-            return response()->json([
-                'success' =>true,
-                'message' => 'Registrasi Berhasil',
-                'data' => $employee
-            ], 201);
-        } else {
-            return response()->json([
-                'success' =>false,
-                'message' => 'Registrasi Gagal',
-
-            ], 200);
-        }
-
-
+        return redirect('/employee');
     }
 
     public function index()
@@ -87,6 +73,7 @@ class EmployeeController extends Controller
         return view('employee.index', compact('employee', 'department', 'name'));
 
     }
+
 
     public function update(Request $request, $id){
         $request->validate([

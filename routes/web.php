@@ -37,7 +37,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::delete('employee/delete/{user_id}',[EmployeeController::class,'delete'])->name('employee.destroy');
     Route::GET('/department',[DepartmentController::class,'index'])->name('department');
     Route::post('department',[DepartmentController::class,'store']);
-    Route::post('employee/edit/{id}',[EmployeeController::class,'update'])->name('employee.update');
+    Route::put('employee/edit/{id}',[EmployeeController::class,'update'])->name('employee.update');
     Route::post('/employee/{id}',[EmployeeController::class,'destroy'])->name('employee.destroy');
 });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
