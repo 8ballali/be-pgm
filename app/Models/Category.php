@@ -24,11 +24,16 @@ class Category extends Model
                 $issue->id = Str::uuid(36);
             });
         }
+
     public function complaint(){
      return $this->hasMany(Complaint::class,'category_id','id');
      }
 
-     public function departmen(){
-        return $this->belongsTo(Department::class);
+     public function department(){
+        return $this->belongsTo(Department::class,'dept_id');
+    }
+    public function getDepartmentNameAttribute()
+    {
+        return $this->department->name;
     }
 }
