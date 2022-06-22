@@ -24,7 +24,7 @@
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div id="modals" class="modal-header modal-colored-header ">
-        <h4 class="modal-title" id="warning-header-modalLabel">Add Employee
+        <h4 class="modal-title" id="warning-header-modalLabel">Add Category
         </h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
@@ -82,7 +82,7 @@
               <tr>
                 <td>{{$c->name}}</td>
                 <td>
-                  {{$c->department->name}}
+                  {{$c->departmen->name}}
                   <!-- @foreach ($department as $dep)
                   @if($dep->id == $c->dept_id)
                   {{$dep->name}}
@@ -133,7 +133,7 @@
                                 </center>
                               </option>
                               @endif
-                              <option value="{{$dept->id}}">{{$dept->name}}</option>
+                              <option value="{{$dept->id}}" @if ($c->dept_id == $dept->id) selected @endif>{{$dept->name}}</option>
                               @endforeach
                             </select>
                           </div>

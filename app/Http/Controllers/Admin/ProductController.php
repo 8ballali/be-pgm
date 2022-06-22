@@ -33,40 +33,79 @@ class ProductController extends Controller
         return view('admin.product', compact('product', 'department', 'name'));
 
     }
+    // public function store(Request $request)
+    // {
+    //     // dd($request->all());
+    //     // return $request;
+    //     $this->validate($request, [
+    //         'blok' => 'required',
+    //         'no_kavling' => 'required',
+    //         'type' => 'required',
+    //         'luas_tanah' => 'required',
+    //         'price' => 'required',
+    //         'status' => 'required',
+    //         'tanah_lebih' => 'required',
+    //         'discount' => 'required',
+    //     ]);
+    //     if ($request->image){
+    //         $file =$request->file('image');
+    //         $ext=$file->getClientOriginalExtension();
+    //         $name='image/'.date('dmYhis').".".$ext;
+    //         $file->move('image/',$name);
+    //         $product = Product::create([
+    //             'blok' => $request->blok,
+    //             'no_kavling' => $request->no_kavling,
+    //             'type' => $request->type,
+    //             'luas_tanah' => $request->luas_tanah,
+    //             'price' => $request->price,
+    //             'status' => $request->status,
+    //             'tanah_lebih' => $request->tanah_lebih,
+    //             'discount' => $request->discount,
+    //             'image' => $name,
+
+    //         ]);
+    //         // $employee->avatar=$name;
+    //     }
+    //     else{$product = Product::create([
+    //         'blok' => $request->blok,
+    //         'no_kavling' => $request->no_kavling,
+    //         'type' => $request->type,
+    //         'luas_tanah' => $request->luas_tanah,
+    //         'price' => $request->price,
+    //         'status' => $request->status,
+    //         'tanah_lebih' => $request->tanah_lebih,
+    //         'discount' => $request->discount,
+
+
+    //     ]);}
+    //     return redirect('/product');
+    // }
     public function store(Request $request)
     {
-        // dd($request->all());
-        // return $request;
-        $this->validate($request, [
-            'blok' => 'required',
-            'no_kavling' => 'required',
-            'type' => 'required',
-            'luas_tanah' => 'required',
-            'price' => 'required',
-            'status' => 'required',
-            'tanah_lebih' => 'required',
-            'discount' => 'required',
-        ]);
-        if ($request->image){
-            $file =$request->file('image');
-            $ext=$file->getClientOriginalExtension();
-            $name='image/'.date('dmYhis').".".$ext;
-            $file->move('image/',$name);
-            $product = Product::create([
-                'blok' => $request->blok,
-                'no_kavling' => $request->no_kavling,
-                'type' => $request->type,
-                'luas_tanah' => $request->luas_tanah,
-                'price' => $request->price,
-                'status' => $request->status,
-                'tanah_lebih' => $request->tanah_lebih,
-                'discount' => $request->discount,
-                'image' => $name,
-
-            ]);
-            // $employee->avatar=$name;
+        $data = $request->all();
+        $rules = [
+            'blok' => ['required'],
+            'no_kavling' => ['required'],
+            'type' => ['required'],
+            'luas_tanah' => ['required'],
+            'price' => ['required'],
+            'status' => ['required'],
+            'tanah_lebih' => ['required'],
+            'discount' => ['required'],
+        ];
+        $image = null;
+        if ($request->image instanceof UploadedFile) {
+            $image = $request->image->store('image', 'public');
+            $data['image'] = $image;
+        }else{
+            unset($data['image']);
         }
-        else{$product = Product::create([
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $product = Product::create([
             'blok' => $request->blok,
             'no_kavling' => $request->no_kavling,
             'type' => $request->type,
@@ -75,9 +114,9 @@ class ProductController extends Controller
             'status' => $request->status,
             'tanah_lebih' => $request->tanah_lebih,
             'discount' => $request->discount,
+            'image' => $image,
 
-
-        ]);}
+        ]);
         return redirect('/product');
     }
     public function destroy($id){

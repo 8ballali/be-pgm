@@ -42,4 +42,9 @@ class DepartmentController extends Controller
         $department->save();
         return redirect('/department');
     }
+    public function destroy($id){
+        $department = Department::findOrFail($id);
+        $department->delete();
+        return redirect('/department');
+    }
 }
