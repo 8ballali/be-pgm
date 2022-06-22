@@ -123,7 +123,7 @@
                 <td>{{$e->name}}</td>
                 <td>{{$e->address}}</td>
                 <td>{{$e->phone}}</td>
-                <td><img src="{{asset($e->avatar )}}" height="40px" width="40px" />
+                <td><img src="{{ url('storage').'/'.$e->avatar }}" height="40px" width="40px" />
                 <td>
                   {{$e->department->name}}
                 </td>

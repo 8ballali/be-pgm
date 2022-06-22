@@ -46,12 +46,11 @@ class CustomerController extends Controller
             'role_id' => 3
         ]);
         $customer = Customer::create([
-            'user_id' => $register->id,
-            'nik' => $request->nik,
             'name' => $request->name,
             'address' => $request->address,
             'avatar' => $avatar,
             'phone' => $request->phone,
+            'user_id' => $register->id,
 
         ]);
         if ($register) {

@@ -82,13 +82,13 @@
               <tr>
                 <td>{{$c->name}}</td>
                 <td>
-                  {{$c->departmen->name}}
+                  {{$c->department->name}}
                   <!-- @foreach ($department as $dep)
                   @if($dep->id == $c->dept_id)
                   {{$dep->name}}
                   @endif
                   @endforeach -->
-                  
+
                 </td>
                 <td>
                   <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" data-toggle="modal" data-target="#editModal{{$c->id }}">

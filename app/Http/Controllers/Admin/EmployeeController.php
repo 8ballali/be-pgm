@@ -13,6 +13,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
@@ -70,42 +71,39 @@ class EmployeeController extends Controller
             $employee_name = Employee::where('user_id', $logged_in)->select('name')->get();
             $name = $employee_name[0]->name;
         }
-        return view('employee.index', compact('employee', 'department', 'name'));
+        return view('admin.employee', compact('employee', 'department', 'name'));
 
     }
 
 
-    public function update(Request $request, $id){
-        $request->validate([
-            'email' => 'required|email|max:191|unique:users,email',
-            'password' => 'required|string',
-            'name' => 'required|string',
-            'address' => 'required|string',
-            'phone' => 'required|string',
-            'dept_id' => 'required|integer',
-        ]);
-        if ($request->avatar) {
-            $avatar = $request->file('avatar');
-            $avatarName = $avatar->getClientOriginalName();
-            $getExt = $avatar->getClientOriginalExtension();
-            $fileName = "AVA" . date('YdmYdmYhis') . "." . $getExt;
-            $avatar->move('avatar/', $fileName);
-            $file = $fileName;
-        } else {
-            $file = null;
-        }
-        $employee = Employee::find($id);
-        $employee->name = $request['name'];
-        $employee->address = $request['address'];
-        $employee->phone = $request['phone'];
-        $employee->dept_id = $request['dept_id'];
-        $employee->save();
-        $user = User::find($employee->user_id);
-        $user->email = $request['email'];
-        $user->password = $request['password'];
-        $user->save();
-        return redirect()->back();
-    }
+    // public function update(Request $request, $id){
+    //     $request->validate([
+    //         'address' => 'required',
+    //         'phone' => 'required',
+    //         'dept_id' => 'required',
+    //     ]);
+    //     if ($request->avatar) {
+    //         $avatar = $request->file('avatar');
+    //         $avatarName = $avatar->getClientOriginalName();
+    //         $getExt = $avatar->getClientOriginalExtension();
+    //         $fileName = "AVA" . date('YdmYdmYhis') . "." . $getExt;
+    //         $avatar->move('avatar/', $fileName);
+    //         $file = $fileName;
+    //     } else {
+    //         $file = null;
+    //     }
+    //     $employee = Employee::find($id);
+    //     $employee->name = $request['name'];
+    //     $employee->address = $request['address'];
+    //     $employee->phone = $request['phone'];
+    //     $employee->dept_id = $request['dept_id'];
+    //     $employee->save();
+    //     $user = User::find($employee->user_id);
+    //     $user->email = $request['email'];
+    //     $user->password = $request['password'];
+    //     $user->save();
+    //     return redirect()->back();
+    // }
     public function delete($user_id)
     {
         $user = User::findOrFail($user_id);
@@ -114,9 +112,34 @@ class EmployeeController extends Controller
         $user->delete();
         return redirect('/employee');
     }
-    // public function test($user_id)
-    // {
-    //     $user = User::findOrFail($user_id);
-    //     dd($user, $user->employee) ;
-    // }
+    public function update($id,Request $request)
+    {
+        $data = $request->all();
+        $rules = [
+            'address' => 'required',
+            'phone' => 'required',
+            'dept_id' => 'required',
+        ];
+        $this->validate($request, [
+        ]);
+        $employee = Employee::find($id);
+
+        if (request()->hasFile('avatar')) {
+            $avatar = request()->file('avatar')->store('avatar', 'public');
+            if (Storage::disk('public')->exists($employee->avatar)) {
+                Storage::disk('public')->delete([$employee->avatar]);
+            }
+            $avatar = request()->file('avatar')->store('avatar', 'public');
+            $data['avatar'] = $avatar;
+            $employee->update($data);
+        }else{
+            unset($data['avatar']);
+        }
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $employee->update($data);
+        return redirect('/employee');
+    }
 }

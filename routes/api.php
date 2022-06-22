@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController as ApiAuthController;
 use App\Http\Controllers\api\CategoryController as ApiCategoryController;
+use App\Http\Controllers\api\ComplaintController;
 use App\Http\Controllers\api\CustomerController;
 use App\Http\Controllers\api\DepartmentController;
 use App\Http\Controllers\api\EmployeeController;
@@ -48,6 +49,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('category/add', [ApiCategoryController::class, 'add']);
     Route::post('category/edit/{category}', [ApiCategoryController::class, 'update']);
     Route::delete('category/delete/{category}', [ApiCategoryController::class, 'delete']);
+    Route::get('product', [ProductController::class, 'index']);
+    Route::get('complaint/{id}', [ComplaintController::class, 'show']);
+    Route::post('complaint/add', [ComplaintController::class, 'add']);
 
 });
 

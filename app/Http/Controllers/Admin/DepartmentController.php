@@ -23,7 +23,7 @@ class DepartmentController extends Controller
             $employee_name = Employee::where('user_id', $logged_in)->select('name')->get();
             $name = $employee_name[0]->name;
         }
-        return view('admin.department.index', compact('department', 'employee', 'name'));
+        return view('admin.department', compact('department', 'employee', 'name'));
     }
     public function store(Request $request)
     {

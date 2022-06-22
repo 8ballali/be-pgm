@@ -20,7 +20,8 @@ class Complaint extends Model
         'status',
         'bukti',
         'feedback_score',
-        'feedback_deskripsi'
+        'feedback_deskripsi',
+        'tindak_lanjut'
     ];
     public $incrementing = false;
 
@@ -33,10 +34,25 @@ class Complaint extends Model
             $issue->id = Str::uuid(36);
         });
     }
+    public function getBuktiUrlAttribute(){
+        return url('storage/'. $this->bukti);
+    }
+    protected $appends = [
+        'bukti_url',
+
+    ];
     public function customer(){
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class,'cust_id');
     }
     public function category(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,'category_id');
+    }
+    public function getCustomerNameAttribute()
+    {
+        return $this->customer->name;
+    }
+    public function getCategoryNameAttribute()
+    {
+        return $this->category->name;
     }
 }
