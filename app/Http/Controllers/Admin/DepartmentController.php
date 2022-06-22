@@ -36,4 +36,10 @@ class DepartmentController extends Controller
         ]);
         return redirect('/pertamina/list-spbu');
     }
+    public function update(Request $request, $id){
+        $department = Department::find($id);
+        $department->name = $request->input('name');
+        $department->save();
+        return redirect('/department');
+    }
 }
