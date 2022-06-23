@@ -37,8 +37,12 @@ class Complaint extends Model
     public function getBuktiUrlAttribute(){
         return url('storage/'. $this->bukti);
     }
+    public function getTindakLanjutUrlAttribute(){
+        return url('storage/'. $this->tindak_lanjut);
+    }
     protected $appends = [
         'bukti_url',
+        'tindak_lanjut_url',
 
     ];
     public function customer(){

@@ -24,7 +24,7 @@ class ComplaintResource extends JsonResource
             'tanggal' => $this->tanggal,
             'status' => $this->status,
             'bukti' => $this->bukti_url,
-            'tindak_lanjut' => $this->tindak_lanjut,
+            'tindak_lanjut' => $this->tindak_lanjut_url,
         ];
     }
 }

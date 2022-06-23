@@ -66,6 +66,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::delete('/product/{id}',[ProductController::class,'destroy'])->name('product.destroy');
     Route::put('product/edit/{id}',[ProductController::class,'update'])->name('product.update');
     Route::GET('/complaint',[ComplaintsController::class,'index']);
+    Route::put('complaint/edit/{id}',[ComplaintsController::class,'update'])->name('complaint.update');
 });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
