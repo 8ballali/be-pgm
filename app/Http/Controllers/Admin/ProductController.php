@@ -13,6 +13,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -105,7 +106,7 @@ class ProductController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $product = Product::create([
+        Product::create([
             'blok' => $request->blok,
             'no_kavling' => $request->no_kavling,
             'type' => $request->type,
@@ -119,36 +120,45 @@ class ProductController extends Controller
         ]);
         return redirect('/product');
     }
+
+    public function update($id,Request $request)
+    {
+        $data = $request->all();
+        $rules = [
+            'blok' => ['required'],
+            'no_kavling' => ['required'],
+            'type' => ['required'],
+            'luas_tanah' => ['required'],
+            'price' => ['required'],
+            'status' => ['required'],
+            'tanah_lebih' => ['required'],
+            'discount' => ['required'],
+        ];
+        $this->validate($request, [
+        ]);
+        $product = Product::find($id);
+
+        if (request()->hasFile('image')) {
+            $image = request()->file('image')->store('image', 'public');
+            if (Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete([$product->image]);
+            }
+            $image = request()->file('image')->store('image', 'public');
+            $data['image'] = $image;
+            $product->update($data);
+        }else{
+            unset($data['image']);
+        }
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $product->update($data);
+        return redirect('/product');
+    }
     public function destroy($id){
         $product = Product::findOrFail($id);
         $product->delete();
         return redirect('/product');
-    }
-    public function update(Request $request, $id){
-        $product=Product::find($id);
-        if ($request->image){
-            $file =$request->file('image');
-            $ext=$file->getClientOriginalExtension();
-            $name='image/'.date('dmYhis').".".$ext;
-            $file->move('image/',$name);
-            $product->image=$name;
-
-        }
-        $product->blok=$request->blok;
-        $product->no_kavling=$request->no_kavling;
-        $product->type=$request->type;
-        $product->luas_tanah=$request->luas_tanah;
-        $product->price=$request->price;
-        $product->status=$request->status;
-        $product->tanah_lebih=$request->tanah_lebih;
-        $product->discount=$request->discount;
-        if($product->save()){
-
-            return redirect('/product');
-        }
-
-
-
-
     }
 }

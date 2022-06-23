@@ -18,7 +18,7 @@
 <!-- End Page -->
 <!-- Modal Add Employee -->
 <!-- Button Modal-->
-<button type="button" id="add" class=" btn btn-rounded" data-toggle="modal" data-target="#warning-header-modal">Add Employee</button>
+<button type="button" id="add" class=" btn btn-rounded" data-toggle="modal" data-target="#warning-header-modal">Add Category</button>
 <!-- End Button Modal -->
 <div id="warning-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="warning-header-modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
@@ -82,7 +82,7 @@
               <tr>
                 <td>{{$c->name}}</td>
                 <td>
-                  {{$c->departmen->name}}
+                  {{$c->department->name}}
                   <!-- @foreach ($department as $dep)
                   @if($dep->id == $c->dept_id)
                   {{$dep->name}}
