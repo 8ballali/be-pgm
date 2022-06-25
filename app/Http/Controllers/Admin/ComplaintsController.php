@@ -20,21 +20,23 @@ class ComplaintsController extends Controller
         $department = Department::all();
         $customer = Customer::all();
         $logged_in = Auth::id();
-
-        $employee = Employee::where('user_id',auth()->user()->id)->first();
-
-        //ngambil departemen si employee
-        $department = Department::find($employee->dept_id);
-
-        // ngambil kategorinya, mumpung sama2 pake depart_id. Asumsi 1 departemen banyak kategori
-        $category = Category::where('dept_id',$employee->dept_id)->get();
-
-        // ngambil komplain berdasarkan id nya categories
-        $complaints = Complaint::whereIn('category_id',$category->modelKeys())->get();
-        if ($complaints == null){
-            $complaints = '';
-        };
-
+        if (Auth::user()->role_id == 1) {
+            $complaints = Complaint::all();
+        }
+        if (Auth::user()->role_id == 2) {
+            $employee = Employee::where('user_id',auth()->user()->id)->first();
+            //ngambil departemen si employee
+            $department = Department::find($employee->dept_id);
+            // ngambil kategorinya, mumpung sama2 pake depart_id. Asumsi 1 departemen banyak kategori
+            $category = Category::where('dept_id',$employee->dept_id)->get();
+            // ngambil komplain berdasarkan id nya categories
+            $complaints = Complaint::whereIn('category_id',$category->modelKeys())->get();
+        }else{
+            $employee = Employee::all();
+            $department = Department::all();
+            $category = Category::all();
+            $complaints = Complaint::all();
+        }
         if (Auth::user()->role_id == 1) {
             $roles = Auth::user()->roles->name;
             $name = $roles;

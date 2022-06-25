@@ -6,6 +6,7 @@ use App\Http\Controllers\api\ComplaintController;
 use App\Http\Controllers\api\CustomerController;
 use App\Http\Controllers\api\DepartmentController;
 use App\Http\Controllers\api\EmployeeController;
+use App\Http\Controllers\api\MemoController;
 use App\Http\Controllers\Customer\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\DepartementController;
@@ -52,6 +53,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('product', [ProductController::class, 'index']);
     Route::get('complaint/{id}', [ComplaintController::class, 'show']);
     Route::post('complaint/add', [ComplaintController::class, 'add']);
+    Route::post('memo/add', [MemoController::class, 'add']);
 
 });
 

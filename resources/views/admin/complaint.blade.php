@@ -119,7 +119,11 @@
                 <td>{{$c->tanggal}}</td>
                 <td>{{$c->status}}</td>
                 <td><img src="{{asset('./storage/'.$c->bukti )}}" height="40px" width="40px" />
+                @if ($c->tindak_lanjut == null)
+                <td>Gambar belom di upload</td>
+                @elseif ($c->tindak_lanjut)
                 <td><img src="{{asset('./storage/'.$c->tindak_lanjut )}}" height="40px" width="40px" />
+                @endif
                 <td>{{$c->feedback_score}}</td>
                 <td>{{$c->feedback_deskripsi}}</td>
                 <td>
