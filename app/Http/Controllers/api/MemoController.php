@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Memo1Resource;
 use App\Http\Resources\MemoResource;
 use App\Models\Memo;
 use Illuminate\Http\Request;
@@ -34,6 +35,14 @@ class MemoController extends Controller
             'meeting_id' => $request->meeting_id,
             'status' => $request->status,
         ]);
+        if ($request->meeting_id == null) {
+            $response = [
+                'success'      => true,
+                'message'    => 'Data Department Created',
+                'data'      => new Memo1Resource($memo),
+            ];
+        return response()->json($response, Response::HTTP_CREATED);
+        }
         $response = [
             'success'      => true,
             'message'    => 'Data Department Created',
