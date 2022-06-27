@@ -19,6 +19,7 @@ class Memo extends Model
         'tanggal',
         'status'
     ];
+
     public $incrementing = false;
 
     protected $keyType = 'string';

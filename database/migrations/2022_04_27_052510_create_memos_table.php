@@ -17,7 +17,7 @@ class CreateMemosTable extends Migration
             $table->uuid('id', 36)->primary();
             $table->uuid('employee_id_pengirim');
             $table->uuid('employee_id_penerima');
-            $table->uuid('meeting_id')->nullabe();
+            $table->uuid('meeting_id')->nullable();
             $table->string('judul');
             $table->string('deskripsi');
             $table->date('tanggal');

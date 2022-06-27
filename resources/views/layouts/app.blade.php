@@ -177,7 +177,7 @@
                                     class="hide-menu">Category
                                 </span></a>
                         </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="#"
+                        <li class="sidebar-item" > <a class="sidebar-link" href="{{url('/complaint')}}"
                                 aria-expanded="false"><i data-feather="inbox" class="feather-icon"></i><span
                                     class="hide-menu">Complaint
                                 </span></a>
@@ -192,7 +192,7 @@
                                 class="hide-menu">Booking
                             </span></a>
                     </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="#"
+                        <li class="sidebar-item" > <a class="sidebar-link" href="{{url('/memo')}}"
                                 aria-expanded="false"><i data-feather="file" class="feather-icon"></i><span
                                     class="hide-menu">Memo
                                 </span></a>
