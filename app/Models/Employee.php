@@ -44,11 +44,11 @@ class Employee extends Model
     }
     public function meeting(){
         return $this->hasMany(Meeting::class,'employee_id','id');
-        }
-    public function memo(){
+    }
+    public function pengirim(){
         return $this->hasMany(Memo::class,'employee_id_pengirim','id');
-            }
-    public function memos(){
+    }
+    public function penerima(){
         return $this->hasMany(Memo::class,'employee_id_penerima','id');
-                    }
+    }
 }

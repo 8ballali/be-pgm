@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\admin\ComplaintsController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\MeetingController;
+use App\Http\Controllers\admin\MemoController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Middleware\Role;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +68,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::put('product/edit/{id}',[ProductController::class,'update'])->name('product.update');
     Route::GET('/complaint',[ComplaintsController::class,'index']);
     Route::put('complaint/edit/{id}',[ComplaintsController::class,'update'])->name('complaint.update');
+    Route::GET('/memo',[MemoController::class,'index']);
+    Route::put('memo/edit/{id}',[MemoController::class,'update'])->name('complaint.update');
 });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
