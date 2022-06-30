@@ -123,7 +123,11 @@
                 <td>{{$e->name}}</td>
                 <td>{{$e->address}}</td>
                 <td>{{$e->phone}}</td>
+                @if ($e->avatar==null)
+                <td><i>None</i></td>
+                @elseif($e->avatar)
                 <td><img src="{{ url('storage').'/'.$e->avatar }}" height="40px" width="40px" />
+                @endif
                 <td>
                   {{$e->department->name}}
                 </td>

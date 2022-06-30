@@ -18,10 +18,13 @@
 <!-- End Page -->
 <!-- Modal Add Employee -->
 <!-- Button Modal-->
+@if (Auth::user()->role_id == 2)
 <button type="button" id="add" class=" btn btn-rounded" data-toggle="modal" data-target="#warning-header-modal">Add Meeting</button>
 <!-- End Button Modal -->
+@endif
 <div id="warning-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="warning-header-modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
+
     <div class="modal-content">
       <div id="modals" class="modal-header modal-colored-header ">
         <h4 class="modal-title" id="warning-header-modalLabel">Add Meeting
@@ -62,6 +65,7 @@
         </form>
       </div>
     </div><!-- /.modal-content -->
+
   </div><!-- /.modal-dialog -->
 </div>
 <!-- End Modal Add Employee -->

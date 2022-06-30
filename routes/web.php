@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\admin\ComplaintsController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\admin\HistoryMemoController;
 use App\Http\Controllers\Admin\MeetingController;
 use App\Http\Controllers\admin\MemoController;
 use App\Http\Controllers\Admin\ProductController;
@@ -69,7 +70,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::GET('/complaint',[ComplaintsController::class,'index']);
     Route::put('complaint/edit/{id}',[ComplaintsController::class,'update'])->name('complaint.update');
     Route::GET('/memo',[MemoController::class,'index']);
-    Route::put('memo/edit/{id}',[MemoController::class,'update'])->name('complaint.update');
+    Route::post('/memo',[MemoController::class,'store'])->name('memo.store');
+    Route::put('memo/edit/{id}',[MemoController::class,'update'])->name('memo.update');
+    Route::GET('/memo/history/{memo_id}',[HistoryMemoController::class,'index'])->name('memo.history');
 });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

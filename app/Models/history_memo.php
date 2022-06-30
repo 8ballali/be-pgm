@@ -27,6 +27,6 @@ class history_memo extends Model
         });
     }
     public function memo(){
-        return $this->belongsTo(Memo::class);
+        return $this->belongsTo(Memo::class,'memo_id');
     }
 }

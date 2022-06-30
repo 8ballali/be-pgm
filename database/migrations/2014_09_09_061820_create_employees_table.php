@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone');
             $table->uuid('dept_id');
             $table->uuid('user_id');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->timestamps();
             $table->foreign('dept_id')
             ->references('id')->on('departments')
