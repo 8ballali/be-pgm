@@ -76,7 +76,8 @@
               <tr>
                 <th>Judul Memo</th>
                 <th>Catatan</th>
-                <th>Bukti</th>
+                {{-- <th>Bukti</th> --}}
+                <th>Created_at</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -96,16 +97,18 @@
                     {{$h->catatan}}
                   </td>
 
-                @if ($h->bukti == null)
+                {{-- @if ($h->bukti == null)
                 <td>Gambar belom di upload</td>
                 @elseif ($h->bukti)
                 <td><img src="{{asset('./storage/'.$h->bukti )}}" height="40px" width="40px" />
-                @endif
-
+                @endif --}}
+                <td>{{Carbon\Carbon::parse($h->created_at)->format('d F Y')}}</td>
                 <td class="d-flex flex-row">
                   <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" data-toggle="modal" data-target="#editModal{{$h->id }}">
                     <span class="btn-label"><i class="far fa-edit"></i></span>
                   </a>
+
+                    <a class="fa fa-download" aria-hidden="true" href="{{ route('history.download', $h->id) }}/" role="button">Download</a>
 
                 </td>
               </tr>
@@ -119,7 +122,7 @@
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
-                      <form role="form text-left" method="post" action="{{ route('complaint.update', $h->id) }}" enctype="multipart/form-data">
+                      <form role="form text-left" method="post" action="{{ route('history.store', $h->id) }}" enctype="multipart/form-data">
                         {{csrf_field()}}
                         {{method_field('PUT')}}
                         <div class="form-group">

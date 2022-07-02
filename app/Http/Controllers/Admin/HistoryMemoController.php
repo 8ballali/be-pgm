@@ -9,7 +9,10 @@ use App\Models\history_memo;
 use App\Models\Meeting;
 use App\Models\Memo;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class HistoryMemoController extends Controller
 {
@@ -34,18 +37,41 @@ class HistoryMemoController extends Controller
         return view('admin.history', compact('history', 'name','employee','history', 'memo'));
 
     }
-    public function update(Request $request, $memo_id)
+    public function store(Request $request, $memo_id)
     {
         $history = history_memo::find($memo_id);
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
+        // dd($history);
+        $data = $request->all();
+        $rules = [
+            'catatan' => ['required', 'string', 'max:255'],
+            'bukti' => ['required'],
+        ];
+        $bukti = null;
+        if ($request->bukti instanceof UploadedFile) {
+            $bukti = $request->bukti->store('bukti', 'public');
+            $data['bukti'] = $bukti;
+        }else{
+            unset($data['bukti']);
+        }
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
 
-        Department::create([
-            'name' => $request->name,
+         history_memo::create([
+            'memo_id' => $history->memo_id,
+            'catatan' => $request->catatan,
+            'bukti' => $bukti
         ]);
-        return redirect('/department');
+        return redirect()->back();
 
+    }
+    public function download ($memo_id)
+    {
+        $download = history_memo::where('id', $memo_id)->firstOrFail();
+        $pathFile = storage_path('app\public/'. $download->bukti);
+
+        return response()->download($pathFile);
     }
 }
 

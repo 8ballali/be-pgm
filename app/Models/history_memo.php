@@ -26,6 +26,14 @@ class history_memo extends Model
             $issue->id = Str::uuid(36);
         });
     }
+
+    public function getBuktiUrlAttribute(){
+        return url('storage/'. $this->bukti);
+    }
+    protected $appends = [
+        'bukti_url',
+
+    ];
     public function memo(){
         return $this->belongsTo(Memo::class,'memo_id');
     }
