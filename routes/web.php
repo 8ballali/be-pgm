@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\HistoryMemoController;
 use App\Http\Controllers\Admin\MeetingController;
 use App\Http\Controllers\admin\MemoController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\admin\StatusBookingController;
 use App\Http\Middleware\Role;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::put('memo/history/add/{memo_id}',[HistoryMemoController::class,'store'])->name('history.store');
     Route::GET('/memo/history/{memo_id}',[HistoryMemoController::class,'index'])->name('memo.history');
     Route::GET('/memo/history/bukti/download/{memo_id}',[HistoryMemoController::class,'download'])->name('history.download');
+    Route::GET('/status-booking',[StatusBookingController::class,'index']);
+    Route::post('/status-booking',[StatusBookingController::class,'store'])->name('status.store');
+    Route::put('/status-booking/edit/{status_id}',[StatusBookingController::class,'update'])->name('status.update');
+    Route::delete('/status-booking/delete/{id}',[StatusBookingController::class,'update'])->name('status.destroy');
 });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

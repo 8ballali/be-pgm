@@ -18,4 +18,5 @@ class ProductController extends Controller
         ];
         return response()->json($response, Response::HTTP_OK);
     }
+
 }

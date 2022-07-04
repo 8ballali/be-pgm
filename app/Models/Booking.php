@@ -27,10 +27,22 @@ class Booking extends Model
             $issue->id = Str::uuid(36);
         });
     }
+    public function getBuktiUrlAttribute()
+    {
+        return url('storage/'. $this->bukti);
+    }
+    protected $appends = [
+        'bukti_url',
+
+    ];
     public function product(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class,'product_id');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'cust_id');
     }
     public function status_booking(){
-        return $this->belongsTo(status_booking::class);
+        return $this->belongsTo(status_booking::class,'status');
     }
 }

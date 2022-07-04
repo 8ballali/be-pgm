@@ -25,7 +25,7 @@ class status_booking extends Model
 
     public function booking()
     {
-        return $this->hasOne(Booking::class,'status','id');
+        return $this->hasOne(Booking::class);
     }
 
 }

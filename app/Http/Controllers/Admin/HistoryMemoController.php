@@ -18,7 +18,7 @@ class HistoryMemoController extends Controller
 {
     public function index($memo_id){
         $logged_in = Auth::id();
-        $history = history_memo::where('memo_id', $memo_id)->get();
+        $history = history_memo::where('memo_id', $memo_id)->orderBy('created_at', 'DESC')->get();
         if (Auth::user()->role_id == 1) {
             $roles = Auth::user()->roles->name;
             $name = $roles;
@@ -40,11 +40,12 @@ class HistoryMemoController extends Controller
     public function store(Request $request, $memo_id)
     {
         $history = history_memo::find($memo_id);
-        // dd($history);
+
+        $memo = Memo::all();
         $data = $request->all();
         $rules = [
-            'catatan' => ['required', 'string', 'max:255'],
-            'bukti' => ['required'],
+            // 'catatan' => ['required', 'string', 'max:255'],
+            // 'bukti' => ['required'],
         ];
         $bukti = null;
         if ($request->bukti instanceof UploadedFile) {
@@ -57,12 +58,20 @@ class HistoryMemoController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+        if ($history->memo->employee_id_pengirim == auth()->user()->employee->id){
+            history_memo::create([
+                'memo_id' => $history->memo_id,
+                'catatan' => $request->catatan,
+            ]);
 
-         history_memo::create([
-            'memo_id' => $history->memo_id,
-            'catatan' => $request->catatan,
-            'bukti' => $bukti
-        ]);
+        }else{
+            $history->bukti = $bukti;
+            $history->save();
+            //When you use get() you call collection When you use first() or find($id) then you get single record that you can update.
+            $memo = Memo::find($history->memo_id)->first();
+            $memo->status = $request->status;
+            $memo->save();
+        }
         return redirect()->back();
 
     }

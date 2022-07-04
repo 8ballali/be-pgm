@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController as ApiAuthController;
+use App\Http\Controllers\api\BookingController;
 use App\Http\Controllers\api\CategoryController as ApiCategoryController;
 use App\Http\Controllers\api\ComplaintController;
 use App\Http\Controllers\api\CustomerController;
@@ -54,6 +55,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('complaint/{id}', [ComplaintController::class, 'show']);
     Route::post('complaint/add', [ComplaintController::class, 'add']);
     Route::post('memo/add', [MemoController::class, 'add']);
+    Route::post('booking/add', [BookingController::class, 'add']);
 
 });
 
