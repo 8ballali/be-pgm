@@ -43,4 +43,8 @@ class Customer extends Model
     public function complaint(){
         return $this->hasMany(Complaint::class,'cust_id','id');
     }
+    public function booking()
+    {
+        return $this->hasMany(Booking::class,'cust_id','id');
+    }
 }

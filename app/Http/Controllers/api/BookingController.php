@@ -3,14 +3,45 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Resource_;
 
 class BookingController extends Controller
 {
+    public function index(Request $request)
+    {
+        $booking = Booking::with('status_booking')->with('product')->
+        when(($request->get('cust_id')), function ($query) use ($request)
+        {
+            $query->where('cust_id', $request->cust_id);
+        })
+        ->when(($request->get('product_id')), function ($query) use ($request)
+        {
+            $query->where('product_id', $request->product_id);
+        })
+        ->when(($request->get('status')), function ($query) use ($request)
+        {
+            $query->where('status', $request->status);
+        })->first();
+        if ($booking) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Booking',
+                'data' => new BookingResource($booking)
+            ],200);
+        }else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Booking Not Found',
+                'data' => []
+            ],404);
+        }
+    }
     public function add(Request $request)
     {
         $data = $request->all();
@@ -34,11 +65,12 @@ class BookingController extends Controller
         $booking = Booking::create([
             'cust_id' => $request->cust_id,
             'product_id' => $request->product_id,
+            'status' => $request->status,
             'bukti' => $bukti,
         ]);
         $response = [
             'success'      => true,
-            'message'    => 'Data Complaint Created',
+            'message'    => 'Data Booking Created',
             'data'      => $booking,
         ];
         return response()->json($response, Response::HTTP_CREATED);

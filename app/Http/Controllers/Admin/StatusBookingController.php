@@ -24,7 +24,7 @@ class StatusBookingController extends Controller
             $employee_name = Employee::where('user_id', $logged_in)->select('name')->get();
             $name = $employee_name[0]->name;
         }
-        return view('admin.status', compact('status','employee','department', 'name'));
+        return view('admin.status-booking', compact('status','employee','department', 'name'));
     }
     public function store(Request $request)
     {
