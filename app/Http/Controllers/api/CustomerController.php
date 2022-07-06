@@ -89,13 +89,20 @@ class CustomerController extends Controller
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([
-                'success' => true,
-                'message' => 'Authenticated',
-                'access_token' => $tokenResult,
-                'token_type' => 'Bearer',
-                'data' => $user,
+                'meta' => [
+                    'code' => 200,
+                    'status' => 'Success',
+                    'message' => 'Authenticated'
+                ],
+                'data' => [
+                    'accessToken' => $tokenResult,
+                    'token_type'  => 'Bearer',
+                    'user'        => $user
+                ],
+
                 // 'subscribers' => new UserDataResource($user)
             ]);
+
         } catch (Exception $error ) {
             return response()->json([
                 'message' => "Authentication Failed " . $error

@@ -67,11 +67,17 @@ class AuthController extends Controller
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([
-                'success' => true,
-                'message' => 'Authenticated',
-                'access_token' => $tokenResult,
-                'token_type' => 'Bearer',
-                'data' => new userResource($user),
+                'meta' => [
+                    'code' => 200,
+                    'status' => 'Success',
+                    'message' => 'Authenticated'
+                ],
+                'data' => [
+                    'accessToken' => $tokenResult,
+                    'token_type'  => 'Bearer',
+                    'user'        => new userResource($user)
+                ],
+
                 // 'subscribers' => new UserDataResource($user)
             ]);
         } catch (Exception $error ) {
