@@ -78,7 +78,7 @@
                                 <th>Judul Memo</th>
                                 <th>Catatan</th>
                                 <th>Bukti</th>
-                                <th>Created_at</th>
+                                <th>Updated_at</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -110,7 +110,7 @@
                 @elseif ($h->bukti)
                 <td><img src="{{asset('./storage/'.$h->bukti )}}" height="40px" width="40px" />
                                 @endif --}}
-                                <td>{{Carbon\Carbon::parse($h->created_at)->format('d F Y')}}</td>
+                                <td>{{Carbon\Carbon::parse($h->updated_at)->format('d F Y')}}</td>
                                 <td class="d-flex flex-row">
                                     <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button"
                                         data-toggle="modal" data-target="#editModal{{$h->id }}">
@@ -139,20 +139,7 @@
                                                 {{csrf_field()}}
                                                 {{method_field('PUT')}}
                                                 @if ($h->memo->employee_id_penerima == auth()->user()->employee->id)
-                                                <div class="form-group">
-                                                    {{-- <label for="message-text" class="col-form-label">Blok</label> --}}
-                                                    <div>
-                                                        <label class="mr-sm-2"
-                                                            for="inlineFormCustomSelect">Status</label>
-                                                        <select class="custom-select mr-sm-2"
-                                                            id="inlineFormCustomSelect" name="status">
-                                                            <option selected>{{$h->status}}</option>
-                                                            <option value="Terkirim">Terkirim</option>
-                                                            <option value="Dalam Proses">Dalam Proses</option>
-                                                            <option value="Terselesaikan">Terselesaikan</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+
                                                 <div class="form-group">
                                                     <label for="message-text" class="col-form-label">Bukti Tindak
                                                         Lanjut</label>
@@ -162,6 +149,20 @@
                                                     </div>
                                                 </div>
                                                 @else
+                                                <div class="form-group">
+                                                    {{-- <label for="message-text" class="col-form-label">Blok</label> --}}
+                                                    <div>
+                                                        <label class="mr-sm-2"
+                                                            for="inlineFormCustomSelect">Status</label>
+                                                        <select class="custom-select mr-sm-2"
+                                                            id="inlineFormCustomSelect" name="status">
+                                                            <option selected>{{$h->status}}</option>
+                                                            <option value="Terkirim">Terkirim</option>
+                                                            <option value="Revisi">Revisi</option>
+                                                            <option value="Terselesaikan">Terselesaikan</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="message-text" class="col-form-label">Catatan</label>
                                                     <div>

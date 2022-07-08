@@ -41,18 +41,28 @@ class MemoController extends Controller
 
         ]);
         if ($request->meeting_id == null) {
-            $response = [
-                'success'      => true,
-                'message'    => 'Data Memo Created',
-                'data'      => new Memo1Resource($memo),
-            ];
-        return response()->json($response, Response::HTTP_CREATED);
+            return response()->json([
+                'meta' => [
+                    'code' => 201,
+                    'status' => 'success',
+                    'message' => 'Data Memo Created',
+                ],
+                'data' => [
+                    'memo' => new Memo1Resource($memo),
+                ]
+            ]);
+
         }
-        $response = [
-            'success'      => true,
-            'message'    => 'Data Department Created',
-            'data'      => new Memo($memo),
-        ];
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json([
+            'meta' => [
+                'code' => 201,
+                'status' => 'success',
+                'message' => 'Data Memo Created'
+            ],
+            'data' => [
+                'memo' => new Memo($memo),
+            ]
+            ]);
+
     }
 }

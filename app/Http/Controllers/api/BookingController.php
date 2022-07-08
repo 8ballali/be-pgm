@@ -30,16 +30,23 @@ class BookingController extends Controller
         })->first();
         if ($booking) {
             return response()->json([
-                'success' => true,
-                'message' => 'Data Booking',
-                'data' => new BookingResource($booking)
-            ],200);
+                'meta' => [
+                    'code'  => 200,
+                    'status' => 'success',
+                    'message' => 'Data Booking Found'
+                ],
+                'data' => [
+                    'booking' => new BookingResource($booking)
+                ],
+            ]);
         }else {
             return response()->json([
-                'success' => false,
-                'message' => 'Data Booking Not Found',
-                'data' => []
-            ],404);
+                'meta' => [
+                    'code' => 404,
+                    'status' => 'Failed',
+                    'message' => 'Data Booking Not Found'
+                ],
+            ]);
         }
     }
     public function add(Request $request)
@@ -68,11 +75,16 @@ class BookingController extends Controller
             'status' => $request->status,
             'bukti' => $bukti,
         ]);
-        $response = [
-            'success'      => true,
-            'message'    => 'Data Booking Created',
-            'data'      => $booking,
-        ];
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json([
+            'meta' => [
+                'code' => 200,
+                'status' => 'success',
+                'message'    => 'Data Booking Created',
+            ],
+            'data' => [
+                'booking' => $booking
+            ]
+        ],200);
+
     }
 }

@@ -19,5 +19,6 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'department_name' => $this->department->name,
         ];
+
     }
 }

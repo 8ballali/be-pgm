@@ -11,12 +11,17 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all();
-        $response = [
-            'success' => true,
-            'message' => 'Data Department',
-            'data' => $product
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json([
+            'meta' => [
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'Data Product'
+            ],
+            'data' => [
+                'product' => $product
+            ]
+        ],200);
+
     }
 
 }

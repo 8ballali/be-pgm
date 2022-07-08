@@ -2,40 +2,52 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $category = Category::first();
-        $response = [
-            'success' => true,
-            'message' => 'Data Kategori',
-            'data' => new CategoryResource($category)
-        ];
-        return response()->json($response, Response::HTTP_OK);
-
+        $category = Category::with('department')->get();
+        return response()->json([
+            'meta' => [
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'Data Category',
+            ],
+            'data' => [
+                //This is How to get Data Resources for HasMany Relationship
+                'category' =>  CategoryResource::collection($category)
+            ]
+        ],200);
     }
     public function show($id)
     {
         $category = Category::find($id);
         if ($category) {
             return response()->json([
-                'success' => true,
-                'message' => 'Detail Kategori',
-                'data' => $category
+                'meta' => [
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'Detail Data Category'
+                ],
+                'data' => [
+                    'category' => $category
+                ],
             ],200);
         }else {
             return response()->json([
-                'success' => false,
-                'message' => 'Data Not Found',
-                'data' => []
+                'meta' => [
+                    'code' => 404,
+                    'status' => 'Failed',
+                    'message' => 'Data Not Found'
+                ],
             ],404);;
         }
     }
@@ -52,12 +64,17 @@ class CategoryController extends Controller
             return response()->json($validator->errors(), 400);
         }
         $category = Category::create($data);
-        $response = [
-            'success'      => true,
-            'message'    => 'Data Kategori Created',
-            'data'      => $category,
-        ];
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json([
+            'meta' => [
+                'code' => 201,
+                'status' => 'success',
+                'message' => 'Data Category was Successfully Created'
+            ],
+            'data' => [
+                'category' => $category
+            ]
+        ],200);
+
     }
     public function update(Request $request, Category $category)
     {
@@ -70,12 +87,16 @@ class CategoryController extends Controller
             return response()->json($validator->errors(), 400);
         }
         $category->update($data);
-        $response = [
-            'success'   => true,
-            'message'   => 'Data Kategori Updated',
-            'data'      => $category,
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json([
+            'meta' => [
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'Data Category updated successfully'
+            ],
+            'data' => [
+                'category' => $category
+            ]
+        ],200);
     }
     public function delete($id)
     {
@@ -83,13 +104,13 @@ class CategoryController extends Controller
 
         try {
             $department->delete();
-            $response = [
-                'success' => true,
-                'message' => 'Data Department Deleted'
-            ];
-
-            return response()->json($response, Response::HTTP_OK);
-
+            return response()->json([
+                'meta' => [
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'Deleted successfully'
+                ]
+            ],200);
         } catch (QueryException $e ) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

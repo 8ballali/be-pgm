@@ -62,10 +62,10 @@
         <h4 class="card-title">Status Booking Table</h4>
 
         <div class="table-responsive">
-          <table id="multi_col_order" class="table table-striped table-bordered display no-wrap" style="width:100%">
+          <table id="mu
+                <th>Name</th>lti_col_order" class="table table-striped table-bordered display no-wrap" style="width:100%">
             <thead>
               <tr>
-                <th>Name</th>
                 <th>Action</th>
               </tr>
             </thead>

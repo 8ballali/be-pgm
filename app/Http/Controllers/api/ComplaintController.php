@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ComplaintResource;
+use App\Http\Resources\FeedbackResource;
 use Illuminate\Http\Request;
 use App\Models\Complaint;
 use Illuminate\Http\Response;
@@ -12,15 +13,34 @@ use Illuminate\Support\Facades\Validator;
 
 class ComplaintController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $complaint = Complaint::all();
-        $response = [
-            'success' => true,
-            'message' => 'Data Complaint',
-            'data' => $complaint
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        $complaint = Complaint::with('customer', 'category')->
+        when(($request->get('cust_id')), function ($query) use ($request)
+        {
+            $query->where('cust_id', $request->cust_id);
+        })->first();;
+        if ($complaint) {
+
+            return response()->json([
+                'meta' => [
+                    'code'  => 200,
+                    'status' => 'success',
+                    'message' => 'Data Complaint Found'
+                ],
+                'data' => [
+                    'complaint' => new ComplaintResource($complaint)
+                ],
+            ]);
+        }else {
+            return response()->json([
+                'meta' => [
+                    'code' => 404,
+                    'status' => 'Failed',
+                    'message' => 'Data Complaint Not Found'
+                ],
+            ],200);
+        }
     }
 
     public function show($id)
@@ -28,16 +48,23 @@ class ComplaintController extends Controller
         $complaint = Complaint::find($id);
         if ($complaint) {
             return response()->json([
-                'success' => true,
-                'message' => 'Detail Complaint',
-                'data' => new ComplaintResource($complaint)
+                'meta' => [
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'Detail Complaint'
+                ],
+                'data' => [
+                    'complaint' => new ComplaintResource($complaint)
+                ]
             ],200);
         }else {
             return response()->json([
-                'success' => false,
-                'message' => 'Data Not Found',
-                'data' => []
-            ],404);;
+                'meta' => [
+                    'code' => 404,
+                    'status' => 'Failed',
+                    'message' => 'Data Not Found',
+                ],
+            ],200);;
         }
     }
 
@@ -74,12 +101,40 @@ class ComplaintController extends Controller
             'status' => 'Terkirim',
             'bukti' => $bukti,
         ]);
-        $response = [
-            'success'      => true,
-            'message'    => 'Data Complaint Created',
-            'data'      => $complaint,
+        return response()->json([
+            'meta' => [
+                'code' => 201,
+                'status' => 'Success',
+                'message' => 'Data Complaint Created'
+            ],
+            'data' => [
+                'complaint' => $complaint
+            ]
+        ],200);
+    }
+    public function feedback(Request $request,$id)
+    {
+        $complaint = Complaint::find($id);
+        $data = $request->all();
+        $rules = [
+            'feedback_score'         => 'required',
+            'feedback_deskripsi'         => 'required',
         ];
-        return response()->json($response, Response::HTTP_CREATED);
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $complaint->update($data);
+        return response()->json([
+            'meta' => [
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'Data Complaint updated successfully'
+            ],
+            'data' => [
+                'complaint' => new FeedbackResource($complaint)
+            ]
+        ],200);
     }
 
 }

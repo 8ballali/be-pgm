@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\CategoriesController;
@@ -77,9 +78,14 @@ Route::group(['middleware' => ['admin']], function () {
     Route::GET('/memo/history/{memo_id}',[HistoryMemoController::class,'index'])->name('memo.history');
     Route::GET('/memo/history/bukti/download/{memo_id}',[HistoryMemoController::class,'download'])->name('history.download');
     Route::GET('/status-booking',[StatusBookingController::class,'index']);
+    Route::GET('/booking',[AdminBookingController::class,'index']);
+    Route::put('/booking/edit/{id}',[AdminBookingController::class,'update'])->name('booking.update');
     Route::post('/status-booking',[StatusBookingController::class,'store'])->name('status.store');
     Route::put('/status-booking/edit/{status_id}',[StatusBookingController::class,'update'])->name('status.update');
     Route::delete('/status-booking/delete/{id}',[StatusBookingController::class,'destroy'])->name('status.destroy');
 });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::group(['middleware' => ['admin', 'employee']], function () {
+
+});

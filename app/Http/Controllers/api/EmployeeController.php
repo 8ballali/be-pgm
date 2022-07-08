@@ -51,15 +51,22 @@ class EmployeeController extends Controller
         ]);
         if ($register) {
             return response()->json([
-                'success' =>true,
-                'message' => 'Registrasi Berhasil',
-                'data' => $employee
-            ], 201);
+                'meta' => [
+                    'code' => 200,
+                    'status' => 'Success',
+                    'message' => 'Registered'
+                ],
+                'data' => [
+                    'employee' => $employee,
+                ],
+            ]);
         } else {
             return response()->json([
-                'success' =>false,
-                'message' => 'Registrasi Gagal',
-
+                'meta' => [
+                    'code' => 500,
+                    'status' => 'Failed',
+                    'message' => 'Registration failed'
+                ],
             ], 200);
         }
     }

@@ -62,15 +62,18 @@ class HistoryMemoController extends Controller
             history_memo::create([
                 'memo_id' => $history->memo_id,
                 'catatan' => $request->catatan,
-            ]);
 
+            ]);
+            $memo = Memo::find($history->memo_id)->first();
+            $memo->status = $request->status;
+            $memo->save();
         }else{
             $history->bukti = $bukti;
             $history->save();
             //When you use get() you call collection When you use first() or find($id) then you get single record that you can update.
-            $memo = Memo::find($history->memo_id)->first();
-            $memo->status = $request->status;
-            $memo->save();
+            // $memo = Memo::find($history->memo_id)->first();
+            // $memo->status = $request->status;
+            // $memo->save();
         }
         return redirect()->back();
 

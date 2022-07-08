@@ -62,9 +62,11 @@
                         <a href="index.html">
                             <b class="logo-icon">
                                 <!-- Dark Logo icon -->
-                                <img src="{{ asset('assets/images/logosa2.png')}}" width="100" height="110" style="margin-right:20px; margin-top:20px;"  alt="homepage" class="dark-logo" />
+                                <img src="{{ asset('assets/images/logosa2.png')}}" width="100" height="110"
+                                    style="margin-right:20px; margin-top:20px;" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo icon -->
-                                <img src="{{ asset('assets/images/logosa2.png')}}" width="60" height="80"  alt="homepage" class="light-logo" />
+                                <img src="{{ asset('assets/images/logosa2.png')}}" width="60" height="80" alt="homepage"
+                                    class="light-logo" />
                             </b>
                             <!--End Logo icon -->
                             <!-- Logo text -->
@@ -102,8 +104,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <img src="" class="rounded-circle"
-                                    width="40">
+                                <img src="" class="rounded-circle" width="40">
                                 <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
                                         class="text-dark">{{$name}}</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i>
@@ -156,53 +157,62 @@
                                     class="hide-menu">Dashboard</span></a></li>
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
-
-                        <li class="sidebar-item" > <a class="sidebar-link" href="{{ url('/employee') }}"
+                        {{-- @if (Auth::user()->role_id == 1) --}}
+                        @if(Auth::check() && Auth::user()->role_id  == 1)
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{ url('/employee') }}"
                                 aria-expanded="false"><i data-feather="users" class="feather-icon"></i><span
                                     class="hide-menu">Employee
                                 </span></a>
                         </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="{{ url('/customer') }}"
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{ url('/customer') }}"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
                                     class="hide-menu">Customer
                                 </span></a>
                         </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="{{ url('/department') }}"
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{ url('/department') }}"
                                 aria-expanded="false"><i data-feather="globe" class="feather-icon"></i><span
                                     class="hide-menu">Departemen
                                 </span></a>
                         </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="{{ url('/categories') }}"
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{ url('/categories') }}"
                                 aria-expanded="false"><i data-feather="menu" class="feather-icon"></i><span
                                     class="hide-menu">Category
                                 </span></a>
                         </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="{{url('/complaint')}}"
-                                aria-expanded="false"><i data-feather="inbox" class="feather-icon"></i><span
-                                    class="hide-menu">Complaint
-                                </span></a>
-                        </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="{{ url('/product') }}"
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{ url('/product') }}"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Product
                                 </span></a>
                         </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="#"
-                            aria-expanded="false"><i data-feather="shopping-cart" class="feather-icon"></i><span
-                                class="hide-menu">Booking
-                            </span></a>
-                    </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="{{url('/memo')}}"
-                                aria-expanded="false"><i data-feather="file" class="feather-icon"></i><span
-                                    class="hide-menu">Memo
+                        <li class="sidebar-item"> <a class="sidebar-link" href="#" aria-expanded="false"><i
+                                    data-feather="shopping-cart" class="feather-icon"></i><span
+                                    class="hide-menu">Booking
                                 </span></a>
                         </li>
-                        <li class="sidebar-item" > <a class="sidebar-link" href="{{ url('/meeting') }}"
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{ url('/meeting') }}"
                                 aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span
                                     class="hide-menu">Meeting
                                 </span></a>
                         </li>
-                             <li class="list-divider"></li>
+
+                        @elseif (Auth::check())
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{url('/complaint')}}"
+                                aria-expanded="false"><i data-feather="inbox" class="feather-icon"></i><span
+                                    class="hide-menu">Complaint
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{url('/memo')}}"
+                                aria-expanded="false"><i data-feather="file" class="feather-icon"></i><span
+                                    class="hide-menu">Memo
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{ url('/meeting') }}"
+                                aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span
+                                    class="hide-menu">Meeting
+                                </span></a>
+                        </li>
+                        @endif
+                        <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
 
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/logout')}}"
@@ -264,12 +274,12 @@
     <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js')}}"></script>
     <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js')}}"></script>
 
- <!-- DataTable -->
+    <!-- DataTable -->
     <script src="{{ asset('assets/extra-libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('assets/extra-libs/datatables.net/js/jquery.dataTables.js')}}"></script>
     <script src="{{ asset('assets/extra-libs/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{ asset('assets/extra-libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{ asset('dist/js/pages/datatable/datatable-basic.init.js')}}"></script>
-  </body>
+</body>
 
 </html>
