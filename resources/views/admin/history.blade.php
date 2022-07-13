@@ -98,8 +98,8 @@
                                     {{$h->catatan}}
                                 </td>
                                 @if ($h->bukti == null)
-                             <td>Bukti belom di upload</td>
-                            @elseif ($h->bukti)
+                                <td>Bukti belom di upload</td>
+                                @elseif ($h->bukti)
                                 <td>
                                     <a class="fa fa-download" aria-hidden="true"
                                         href="{{ route('history.download', $h->id) }}/" role="button">Download</a>

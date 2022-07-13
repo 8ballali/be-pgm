@@ -18,8 +18,11 @@
 <!-- End Page -->
 <!-- Modal Add Employee -->
 <!-- Button Modal-->
-<button type="button" id="add" class=" btn btn-rounded" data-toggle="modal" data-target="#warning-header-modal">Add
-    Memo</button>
+@if (Auth::user()->role_id == 1)
+<button type="button" id="add" class=" btn btn-rounded" data-toggle="modal" data-target="#warning-header-modal">
+    Add Booking
+</button>
+@endif
 <!-- End Button Modal -->
 {{-- <div id="warning-header-modal" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="warning-header-modalLabel" aria-hidden="true">
@@ -32,77 +35,77 @@
             </div>
             <div class="modal-body">
                 <form role="form text-left" method="post" action="{{ route('memo.store') }}"
-                    enctype="multipart/form-data">
-                    {{csrf_field()}}
+enctype="multipart/form-data">
+{{csrf_field()}}
 
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Sender</label>
-                        <div>
-                            <select name='employee_id_pengirim' readonly="readonly" class='form-control'>
-                                <option value="{{$employee->id}}">{{$employee->name}}</option>
+<div class="form-group">
+    <label for="message-text" class="col-form-label">Sender</label>
+    <div>
+        <select name='employee_id_pengirim' readonly="readonly" class='form-control'>
+            <option value="{{$employee->id}}">{{$employee->name}}</option>
 
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Receiver</label>
-                        <div>
-                            <select name='employee_id_penerima' class='form-control'>
-                                @foreach($employee_name as $em)
-                                <option hidden value="">
-                                    <center>-- Pilih --</center>
-                                </option>
-                                <option value="{{$em->id}}">{{$em->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Meeting Tittle</label>
-                        <div>
-                            <select name='meeting_id' class='form-control'>
-                                @foreach($meeting as $met)
-                                <option hidden value="">
-                                    <center>-- Pilih --</center>
-                                </option>
-                                <option value="{{$met->id}}">{{$met->judul}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Memo Tittle</label>
-                        <div>
-                            <input class="form-control" name="judul" placeholder="Memo Tittle"></input>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description</label>
-                        <div>
-                            <textarea class="form-control" name="deskripsi" placeholder="Description"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Date</label>
-                        <div>
-                            <input type="date" class="form-control" name="tanggal" placeholder="date">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Status</label>
-                        <div>
-                            <input type="text" class="form-control" name="status" placeholder="status" value="Terkirim" readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="form-group text-center">
-                        <button id="btn" type="submit" class="btn btn-block">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div> --}}
-        <!-- /.modal-content -->
-    {{-- </div> --}}
-    <!-- /.modal-dialog -->
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="message-text" class="col-form-label">Receiver</label>
+    <div>
+        <select name='employee_id_penerima' class='form-control'>
+            @foreach($employee_name as $em)
+            <option hidden value="">
+                <center>-- Pilih --</center>
+            </option>
+            <option value="{{$em->id}}">{{$em->name}}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="message-text" class="col-form-label">Meeting Tittle</label>
+    <div>
+        <select name='meeting_id' class='form-control'>
+            @foreach($meeting as $met)
+            <option hidden value="">
+                <center>-- Pilih --</center>
+            </option>
+            <option value="{{$met->id}}">{{$met->judul}}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="message-text" class="col-form-label">Memo Tittle</label>
+    <div>
+        <input class="form-control" name="judul" placeholder="Memo Tittle"></input>
+    </div>
+</div>
+<div class="form-group">
+    <label for="message-text" class="col-form-label">Description</label>
+    <div>
+        <textarea class="form-control" name="deskripsi" placeholder="Description"></textarea>
+    </div>
+</div>
+<div class="form-group">
+    <label for="message-text" class="col-form-label">Date</label>
+    <div>
+        <input type="date" class="form-control" name="tanggal" placeholder="date">
+    </div>
+</div>
+<div class="form-group">
+    <label for="message-text" class="col-form-label">Status</label>
+    <div>
+        <input type="text" class="form-control" name="status" placeholder="status" value="Terkirim" readonly="readonly">
+    </div>
+</div>
+<div class="form-group text-center">
+    <button id="btn" type="submit" class="btn btn-block">Submit</button>
+</div>
+</form>
+</div>
+</div> --}}
+<!-- /.modal-content -->
+{{-- </div> --}}
+<!-- /.modal-dialog -->
 {{-- </div> --}}
 <!-- End Modal Add Employee -->
 <br>
@@ -127,7 +130,9 @@
                                 <th>Tanah Lebih</th>
                                 <th>Status</th>
                                 <th>Bukti</th>
+                                @if (Auth::user()->role_id == 1)
                                 <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -141,25 +146,70 @@
                                 <td>{{$b->product->luas_tanah}}</td>
                                 <td>{{$b->product->tanah_lebih}}</td>
                                 <td>{{$b->status_booking->name}}</td>
-                                @if ($b->bukti == null)
-                                <td>Bukti belom di upload</td>
-                                @elseif ($b->bukti)
-                                <td><img src="{{ url('storage').'/'.$b->bukti }}" height="40px" width="40px" />
-                                @endif
+                                <td>
+                                    <a class="fa fa-download" aria-hidden="true"
+                                        href="{{ route('booking.download', $b->id) }}/" role="button">Download</a>
+                                </td>
+                                @if (Auth::user()->role_id == 1)
                                 <td class="d-flex flex-row">
-                                    <a id="detail" class="btn btn-circle btn-lg btn-info  text-white" type="button"
-                                        href="{{ url('/memo/history/'.$b->id) }}">
-                                        <span class="btn-label"><i class="fa fa-info"></i></span>
+                                    <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button"
+                                        data-toggle="modal" data-target="#editModal{{$b->id }}">
+                                        <span class="btn-label"><i class="far fa-edit"></i></span>
                                     </a>
                                 </td>
+                                @endif
                             </tr>
-            @endforeach
-            </tbody>
-            </table>
+                            <div id="editModal{{$b->id }}" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="warning-header-modalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div id="modals" class="modal-header modal-colored-header ">
+                                            <h4 class="modal-title" id="warning-header-modalLabel">Check Booking Fee
+                                            </h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form role="form text-left" method="post"
+                                                action="{{ route('booking.update', $b->id) }}"
+                                                enctype="multipart/form-data">
+                                                {{csrf_field()}}
+                                                {{method_field('PUT')}}
+
+                                                <div class="form-group">
+                                                    <label for="message-text" class="col-form-label">Validasi
+                                                        Bukti</label>
+                                                    <div>
+                                                        <select name='status' class='form-control'>
+                                                            @foreach($status as $book)
+                                                            @if($book->id == $b->status)
+                                                            <option hidden value="{{$book->id}}">
+                                                                <center>
+                                                                    {{$book->name}}
+                                                                </center>
+                                                            </option>
+                                                            @endif
+                                                            <option value="{{$book->id}}" @if ($b->status== $book->id)
+                                                                selected @endif>{{$book->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group text-center">
+                                                    <button id="btn" type="submit" class="btn btn-block">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 <!-- End Table Employee -->
 <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>

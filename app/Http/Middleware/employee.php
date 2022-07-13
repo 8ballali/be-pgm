@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class employee
 {
@@ -19,7 +20,9 @@ class employee
     {
 
         if(Auth::user()->role_id != 1){
-            return abort(404);
+            Alert::error('Error', 'You Dont Have Permission to access');
+            return redirect()->back();
+
         }else{
             return $next($request);
         }

@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product = Product::all();
+        $product = Product::where('status', 'Available')->get();
         return response()->json([
             'meta' => [
                 'code' => 200,

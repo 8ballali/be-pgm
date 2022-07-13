@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/logosalog.png')}}">
+    {{-- <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/logosalog.png')}}"> --}}
+    <link rel="shortcut icon" href="{{url('assets/images/logosalog.png')}}" type="image/png">
     <title>Service Automotion</title>
     <!-- Custom CSS -->
     <link href="{{ asset('assets/extra-libs/c3/c3.min.css')}}" rel="stylesheet">
@@ -159,6 +160,11 @@
                         <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
                         {{-- @if (Auth::user()->role_id == 1) --}}
                         @if(Auth::check() && Auth::user()->role_id  == 1)
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{url('/complaint')}}"
+                            aria-expanded="false"><i data-feather="inbox" class="feather-icon"></i><span
+                                class="hide-menu">Complaint
+                            </span></a>
+                       </li>
                         <li class="sidebar-item"> <a class="sidebar-link" href="{{ url('/employee') }}"
                                 aria-expanded="false"><i data-feather="users" class="feather-icon"></i><span
                                     class="hide-menu">Employee
@@ -184,7 +190,7 @@
                                     class="hide-menu">Product
                                 </span></a>
                         </li>
-                        <li class="sidebar-item"> <a class="sidebar-link" href="#" aria-expanded="false"><i
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{url('/booking')}}" aria-expanded="false"><i
                                     data-feather="shopping-cart" class="feather-icon"></i><span
                                     class="hide-menu">Booking
                                 </span></a>
@@ -210,6 +216,11 @@
                                 aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span
                                     class="hide-menu">Meeting
                                 </span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{url('/booking')}}" aria-expanded="false"><i
+                            data-feather="shopping-cart" class="feather-icon"></i><span
+                            class="hide-menu">Booking
+                        </span></a>
                         </li>
                         @endif
                         <li class="list-divider"></li>
@@ -280,6 +291,7 @@
     <script src="{{ asset('assets/extra-libs/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{ asset('assets/extra-libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{ asset('dist/js/pages/datatable/datatable-basic.init.js')}}"></script>
+    @include('sweetalert::alert')
 </body>
 
 </html>

@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class AuthController extends Controller
 {
@@ -18,10 +20,11 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect('/employee');
+            Alert::success('Congrats', 'Login Successfully');
+            return redirect('/complaint');
         }else {
+            Alert::error('Error', 'Failed Login');
             return redirect('/');
         }
 

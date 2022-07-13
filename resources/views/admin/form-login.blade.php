@@ -292,6 +292,7 @@
 <body>
 
     <div class="container" id="container">
+
         <div class="form-container sign-up-container">
             <form action="#">
                 <h1>Create Account</h1>
@@ -303,7 +304,25 @@
         </div>
         <div class="form-container sign-in-container">
 
+            {{-- @if(Session::has('success'))
 
+            <div class="alert alert-success">
+                {{Session::get('success')}}
+            </div>
+
+        @endif --}}
+        @if(Session::has('fail'))
+
+    <div class="alert alert-danger">
+       {{Session::get('fail')}}
+    </div>
+
+        @endif
+        {{-- @if(session()->has('error'))
+    <div class="alert alert-danger">
+        {{ session()->get('error') }}
+    </div>
+        @endif --}}
 
 				<form action="{{route('login')}}" method="post">
 
@@ -341,6 +360,7 @@
                         container.classList.remove("right-panel-active");
                         });
                         </script>
+                        @include('sweetalert::alert')
 </body>
 
 </html>

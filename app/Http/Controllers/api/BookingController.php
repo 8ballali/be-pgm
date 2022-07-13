@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
@@ -51,6 +52,7 @@ class BookingController extends Controller
     }
     public function add(Request $request)
     {
+
         $data = $request->all();
         $rules = [
             'cust_id'=> 'required',
@@ -75,6 +77,7 @@ class BookingController extends Controller
             'status' => $request->status,
             'bukti' => $bukti,
         ]);
+
         return response()->json([
             'meta' => [
                 'code' => 200,
