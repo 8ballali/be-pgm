@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('category/delete/{category}', [ApiCategoryController::class, 'delete']);
     Route::get('product', [ProductController::class, 'index']);
     Route::get('complaint', [ComplaintController::class, 'index']);
+    Route::get('complaint/{id}', [ComplaintController::class, 'show']);
     Route::post('complaint/add', [ComplaintController::class, 'add']);
     Route::post('complaint/edit/{id}', [ComplaintController::class, 'feedback']);
     Route::post('memo/add', [MemoController::class, 'add']);
