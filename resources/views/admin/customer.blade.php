@@ -29,6 +29,15 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
       <div class="modal-body">
+        @if ($errors->any())
+      <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+      </div><br />
+    @endif
         <form role="form text-left" method="post" action="{{ route('customer.store') }}" enctype="multipart/form-data">
           {{csrf_field()}}
           <div class="form-group">

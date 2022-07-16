@@ -90,7 +90,7 @@
                   @endforeach -->
 
                 </td>
-                <td>
+                <td class="d-flex flex-row">
                   <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" data-toggle="modal" data-target="#editModal{{$c->id }}">
                     <span class="btn-label"><i class="far fa-edit"></i></span>
                   </a>
@@ -143,10 +143,10 @@
                         </div>
                       </form>
                     </div>
-                  </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
+                  </div>
+                </div>
               </div>
-              <!-- End Modal Edit -->
+
               @endforeach
             </tbody>
           </table>

@@ -7,32 +7,25 @@ use App\Http\Resources\ComplaintResource;
 use App\Http\Resources\FeedbackResource;
 use Illuminate\Http\Request;
 use App\Models\Complaint;
+use App\Models\Customer;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ComplaintController extends Controller
 {
+    public function getCustomer()
+    {
+        $get=Customer::where('user_id',Auth::user()->id)->first();
+        return $get;
+    }
     public function index(Request $request)
     {
         $complaint = Complaint::with('customer', 'category')->
-        when(($request->get('cust_id')), function ($query) use ($request)
-        {
-            $query->where('cust_id', $request->cust_id);
-        })->first();;
-        if ($complaint) {
-
-            return response()->json([
-                'meta' => [
-                    'code'  => 200,
-                    'status' => 'success',
-                    'message' => 'Data Complaint Found'
-                ],
-                'data' => [
-                    'complaint' => new ComplaintResource($complaint)
-                ],
-            ]);
-        }else {
+        where('cust_id', $this->getCustomer()->id)->get();
+        // return $complaint;
+        if ($complaint->isEmpty()) {
             return response()->json([
                 'meta' => [
                     'code' => 404,
@@ -40,6 +33,17 @@ class ComplaintController extends Controller
                     'message' => 'Data Complaint Not Found'
                 ],
             ],200);
+        }else {
+            return response()->json([
+                'meta' => [
+                    'code'  => 200,
+                    'status' => 'success',
+                    'message' => 'Data Complaint Found'
+                ],
+                'data' => [
+                    'complaint' => $complaint
+                ],
+            ]);
         }
     }
 

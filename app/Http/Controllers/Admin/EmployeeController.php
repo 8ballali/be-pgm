@@ -54,6 +54,7 @@ class EmployeeController extends Controller
             'avatar' => $avatar,
 
         ]);
+        toast('Your Post has been submited!','success');
         return redirect('/employee');
     }
 
@@ -75,35 +76,6 @@ class EmployeeController extends Controller
 
     }
 
-
-    // public function update(Request $request, $id){
-    //     $request->validate([
-    //         'address' => 'required',
-    //         'phone' => 'required',
-    //         'dept_id' => 'required',
-    //     ]);
-    //     if ($request->avatar) {
-    //         $avatar = $request->file('avatar');
-    //         $avatarName = $avatar->getClientOriginalName();
-    //         $getExt = $avatar->getClientOriginalExtension();
-    //         $fileName = "AVA" . date('YdmYdmYhis') . "." . $getExt;
-    //         $avatar->move('avatar/', $fileName);
-    //         $file = $fileName;
-    //     } else {
-    //         $file = null;
-    //     }
-    //     $employee = Employee::find($id);
-    //     $employee->name = $request['name'];
-    //     $employee->address = $request['address'];
-    //     $employee->phone = $request['phone'];
-    //     $employee->dept_id = $request['dept_id'];
-    //     $employee->save();
-    //     $user = User::find($employee->user_id);
-    //     $user->email = $request['email'];
-    //     $user->password = $request['password'];
-    //     $user->save();
-    //     return redirect()->back();
-    // }
     public function delete($user_id)
     {
         $user = User::findOrFail($user_id);
@@ -140,6 +112,7 @@ class EmployeeController extends Controller
             return response()->json($validator->errors(), 400);
         }
         $employee->update($data);
+        toast('Employee Updated!','success');
         return redirect('/employee');
     }
 }

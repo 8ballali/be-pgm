@@ -44,6 +44,7 @@ class MeetingController extends Controller
             'employee_id' => $id,
 
         ]);
+        toast('Your Notulensi as been submited!','success');
         return redirect('/meeting');
     }
     public function destroy ($id){
@@ -57,6 +58,7 @@ class MeetingController extends Controller
         $meeting->judul = $request->input('judul');
         $meeting->notulensi = $request->input('notulensi');
         $meeting->save();
+        toast('Meeting Updated!','success');
         return redirect('/meeting');
     }
 

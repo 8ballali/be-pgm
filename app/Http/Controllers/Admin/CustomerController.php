@@ -13,6 +13,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -47,7 +48,12 @@ class CustomerController extends Controller
 
         ];
         $avatar = null;
-
+        if ($request->avatar instanceof UploadedFile) {
+            $avatar = $request->avatar->store('avatar', 'public');
+            $data['avatar'] = $avatar;
+        }else{
+            unset($data['avatar']);
+        }
         $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
@@ -57,33 +63,20 @@ class CustomerController extends Controller
             'password' => Hash::make($request->password),
             'role_id' => 3
         ]);
-        if ($request->avatar){
-            $file =$request->file('avatar');
-            $ext=$file->getClientOriginalExtension();
-            $name='avatar/'.date('dmYhis').".".$ext;
-            $file->move('avatar/',$name);
-            $customer = Customer::create([
+
+            Customer::create([
                 'nik' => $request->nik,
                 'name' => $request->name,
                 'address' => $request->address,
                 'phone' => $request->phone,
                 'dept_id' => $request->dept_id,
                 'user_id' => $register->id,
-                'avatar' => $name,
+                'avatar' => $avatar,
 
             ]);
-            // $employee->avatar=$name;
-        }
-        else{$customer = Customer::create([
-            'nik' => $request->nik,
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'dept_id' => $request->dept_id,
-            'user_id' => $register->id,
-            // 'avatar' => $avatar,
-        ]);}
-        return redirect('/customer');
+            toast('Your Post as been submited!','success');
+            return redirect('/customer');
+
     }
     public function delete($user_id)
     {
@@ -94,24 +87,31 @@ class CustomerController extends Controller
         return redirect('/customer');
     }
     public function update(Request $request, $id){
-        // $request->validate([
-        //     'email' => 'required|email|max:191|unique:users,email',
-        //     'name' => 'required|string',
-        //     'address' => 'required|string',
-        //     'phone' => 'required|string',
-        //     'dept_id' => 'required|integer',
-        // ]);
-
-        $customer = Customer::with('user')->find($id);
+        $data = $request->all();
+        $rules = [
+            'address' => 'required',
+            'phone' => 'required',
+        ];
+        $this->validate($request, [
+        ]);
+        $customer = Customer::find($id);
         $user=User::find($customer->user_id);
-        if ($request->avatar){
-            $file =$request->file('avatar');
-            $ext=$file->getClientOriginalExtension();
-            $name='avatar/'.date('dmYhis').".".$ext;
-            $file->move('avatar/',$name);
-            $customer->avatar=$name;
-
+        if (request()->hasFile('avatar')) {
+            $avatar = request()->file('avatar')->store('avatar', 'public');
+            if (Storage::disk('public')->exists($customer->avatar)) {
+                Storage::disk('public')->delete([$customer->avatar]);
+            }
+            $avatar = request()->file('avatar')->store('avatar', 'public');
+            $data['avatar'] = $avatar;
+            $customer->update($data);
+        }else{
+            unset($data['avatar']);
         }
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
         $user->email=$request->email;
         $customer->nik=$request->nik;
         $customer->name=$request->name;
@@ -119,7 +119,7 @@ class CustomerController extends Controller
         $customer->phone=$request->phone;
 
         if($user->save() && $customer->save()){
-
+            toast('Customer Updated!','success');
             return redirect('/customer');
         }
 

@@ -41,6 +41,7 @@ class CategoriesController extends Controller
             'name' => $request->name,
             'dept_id' => $request->dept_id,
         ]);
+        toast('Your Category as been submited!','success');
         return redirect('/categories');
     }
 
@@ -49,6 +50,7 @@ class CategoriesController extends Controller
         $category->name = $request->input('name');
         $category->dept_id = $request->input('dept_id');
         $category->save();
+        toast('Category Updated!','success');
         return redirect('/categories');
     }
 

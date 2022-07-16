@@ -34,19 +34,20 @@ class DepartmentController extends Controller
         Department::create([
             'name' => $request->name,
         ]);
-        toast('Your Post as been submited!','success');
+        toast('Your Post has been submited!','success');
         return redirect('/department');
     }
     public function update(Request $request, $id){
         $department = Department::find($id);
         $department->name = $request->input('name');
         $department->save();
-        toast('Your Post as been Updated!','success');
+        toast('Department  has been Updated!','success');
         return redirect('/department');
     }
     public function destroy($id){
         $department = Department::findOrFail($id);
         $department->delete();
+        toast('Department has been Deleted!','success');
         return redirect('/department');
     }
 }
