@@ -117,6 +117,8 @@ class CustomerController extends Controller
         $customer->name=$request->name;
         $customer->address=$request->address;
         $customer->phone=$request->phone;
+        $user->save();
+        $customer->save();
 
         if($user->save() && $customer->save()){
             toast('Customer Updated!','success');

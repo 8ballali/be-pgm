@@ -5,31 +5,35 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
+use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\Resource_;
 
 class BookingController extends Controller
 {
+    public function logCustomer()
+    {
+        $logged_in = Customer::where('user_id', Auth::user()->id)->first();
+        return $logged_in;
+    }
     public function index(Request $request)
     {
-        $booking = Booking::with('status_booking')->with('product')->
-        when(($request->get('cust_id')), function ($query) use ($request)
-        {
-            $query->where('cust_id', $request->cust_id);
-        })
-        ->when(($request->get('product_id')), function ($query) use ($request)
+        $booking = Booking::with('customer.user','product','status_booking')->
+        where('cust_id', $this->logCustomer()->id)->
+        when(($request->get('product_id')), function ($query) use ($request)
         {
             $query->where('product_id', $request->product_id);
         })
         ->when(($request->get('status')), function ($query) use ($request)
         {
             $query->where('status', $request->status);
-        })->first();
-        if ($booking) {
+        })->get();
+        if ($booking->isNotEmpty()) {
             return response()->json([
                 'meta' => [
                     'code'  => 200,
@@ -37,7 +41,7 @@ class BookingController extends Controller
                     'message' => 'Data Booking Found'
                 ],
                 'data' => [
-                    'booking' => new BookingResource($booking)
+                    'booking' => $booking
                 ],
             ]);
         }else {

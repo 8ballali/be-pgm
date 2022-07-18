@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Validator;
 
 class ComplaintController extends Controller
 {
-    public function getCustomer()
+    public function logCustomer()
     {
-        $get=Customer::where('user_id',Auth::user()->id)->first();
-        return $get;
+        $logged_in=Customer::where('user_id',Auth::user()->id)->first();
+        return $logged_in;
     }
     public function index(Request $request)
     {
         $complaint = Complaint::with('customer', 'category')->
-        where('cust_id', $this->getCustomer()->id)->get();
+        where('cust_id', $this->logCustomer()->id)->get();
         // return $complaint;
         if ($complaint->isEmpty()) {
             return response()->json([
