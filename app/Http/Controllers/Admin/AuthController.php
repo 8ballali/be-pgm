@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             Alert::success('Congrats', 'Login Successfully');
-            return redirect('/complaint');
+            return redirect('/dashboard');
         }else {
             Alert::error('Error', 'Failed Login');
             return redirect('/');

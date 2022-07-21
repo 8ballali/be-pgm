@@ -112,27 +112,13 @@
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Account Setting</a>
-                                <div class="dropdown-divider"></div>
+
+
                                 <a class="dropdown-item" href="{{url('/logout')}}"><i data-feather="power"
                                         class="svg-icon mr-2 ml-1"></i>
                                     Logout</a>
-                                <div class="dropdown-divider"></div>
-                                <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">View
-                                        Profile</a></div>
-                            </div>
+
+
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -153,7 +139,7 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="index.html"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/dashboard')}}"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
                         <li class="list-divider"></li>

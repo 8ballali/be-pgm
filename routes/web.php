@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\admin\ComplaintsController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HistoryMemoController;
 use App\Http\Controllers\Admin\MeetingController;
 use App\Http\Controllers\admin\MemoController;
@@ -42,6 +43,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 //employee
 
 Route::group(['middleware' => ['admin']], function () {
+    Route::GET('/dashboard',[DashboardController::class,'index']);
     Route::GET('/employee',[EmployeeController::class,'index']);
     Route::post('employee',[EmployeeController::class,'store'])->name('employee.store');
     Route::post('employee/edit/{id}',[EmployeeController::class,'update'])->name('employee.update');

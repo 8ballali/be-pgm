@@ -96,7 +96,7 @@ class CustomerController extends Controller
             $user = User::where('email', $request->email)->first();
             $user->tokens()->delete();
             $tokenResult = $user->createToken('authToken')->plainTextToken;
-
+            $customer = Customer::where('user_id', $user->id)->first();
             return response()->json([
                 'meta' => [
                     'code' => 200,
@@ -106,7 +106,8 @@ class CustomerController extends Controller
                 'data' => [
                     'accessToken' => $tokenResult,
                     'token_type'  => 'Bearer',
-                    'user'        => $user
+                    'user'        => $user,
+                    'customer' => $customer
                 ],
 
                 // 'subscribers' => new UserDataResource($user)

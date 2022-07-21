@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeStatusToStringFromMemos extends Migration
+class AddColumnTglPenyelesaianToComplaints extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeStatusToStringFromMemos extends Migration
      */
     public function up()
     {
-        Schema::table('memos', function (Blueprint $table) {
-            $table->string('status')->change();
+        Schema::table('complaints', function (Blueprint $table) {
+            $table->date('tgl_penyelesaian')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class ChangeStatusToStringFromMemos extends Migration
      */
     public function down()
     {
-        Schema::table('memos', function (Blueprint $table) {
+        Schema::table('complaints', function (Blueprint $table) {
             //
         });
     }
