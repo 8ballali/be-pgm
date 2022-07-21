@@ -25,7 +25,6 @@ class DashboardController extends Controller
         $customer = Customer::all();
         $product = Product::all();
         $logged_in = Auth::id();
-        $complaints = Complaint::count();
         $finished_complaints = Complaint::where('status', 'Terselesaikan')->count();
         $booked_products = Product::where('status', 'Booked')->count();
         $available_products = Product::where('status', 'Available')->count();
@@ -36,12 +35,22 @@ class DashboardController extends Controller
             $employee = Employee::all();
             $employee_name = Employee::all();
             $finished_memo = Memo::where('status', "Terselesaikan")->count();
+            $total_complaints = Complaint::count();
 
         }else {
             $employee_name = Employee::where('user_id', $logged_in)->select('name')->get();
             $name = $employee_name[0]->name;
             $employee = Employee::where('user_id',auth()->user()->id)->first();
             $memo = Memo::where('employee_id_penerima', $employee->id)->count();
+            $employee = Employee::where('user_id',auth()->user()->id)->first();
+            //ngambil departemen si employee
+            $department = Department::find($employee->dept_id);
+            // ngambil kategorinya, mumpung sama2 pake depart_id. Asumsi 1 departemen banyak kategori
+            $category = Category::where('dept_id',$employee->dept_id)->get();
+            // ngambil komplain berdasarkan id nya categories
+            $complaints = Complaint::whereIn('category_id',$category->modelKeys())->get();
+            $total_complaints = $complaints->count();
+
             $finished_memo = Memo::where([
                 ['employee_id_penerima','=',$employee->id],
                 ['status', '=', "Terselesaikan"]
@@ -49,7 +58,7 @@ class DashboardController extends Controller
 
         }
         return view('admin.dashboard', compact(
-            'product','employee', 'memo','complaints',
+            'product','employee', 'memo','total_complaints',
              'name','finished_memo','finished_complaints',
              'booked_products','available_products'
         ));

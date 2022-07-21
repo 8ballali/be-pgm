@@ -52,7 +52,7 @@
                     <div>
                         <div class="d-inline-flex align-items-center">
                             <h2 class="text-dark mb-1 font-weight-medium">
-                                {{$complaints}}
+                                {{$total_complaints}}
                             </h2>
                             <span
                                 class="badge bg-danger font-12 text-white font-weight-medium badge-pill ml-2 d-lg-block d-md-none">Received</span>
