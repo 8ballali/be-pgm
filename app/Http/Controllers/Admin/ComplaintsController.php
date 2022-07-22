@@ -8,6 +8,7 @@ use App\Models\Complaint;
 use App\Models\Customer;
 use App\Models\Department;
 use App\Models\Employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,7 @@ class ComplaintsController extends Controller
         $department = Department::all();
         $customer = Customer::all();
         $logged_in = Auth::id();
+
         if (Auth::user()->role_id == 1) {
             $complaints = Complaint::all();
         }
@@ -55,6 +57,7 @@ class ComplaintsController extends Controller
         ];
         $this->validate($request, [
         ]);
+
         $complaints = Complaint::find($id);
         if (request()->hasFile('tindak_lanjut')) {
             $tindak_lanjut = request()->file('tindak_lanjut')->store('tindak_lanjut', 'public');
@@ -71,7 +74,12 @@ class ComplaintsController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $complaints->update($data);
+        if ($request->status=='Terselesaikan') {
+            $complaints->status = $request->status;
+            $complaints->tgl_penyelesaian = Carbon::now();
+        }
+        $complaints->status = $request->status;
+        $complaints->save();
         return redirect('/complaint');
 
     }
