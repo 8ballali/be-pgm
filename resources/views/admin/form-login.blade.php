@@ -339,11 +339,7 @@
             </div>
             <div class="overlay-container">
                 <div class="overlay">
-                    {{-- <div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
-				<button class="ghost" id="signIn">Sign In</button>
-			</div> --}}
+
                     <div class="overlay-panel overlay-right ">
                         <img id="rumah" src="{{ asset('assets/images/rumah.png')}}"
                             {{-- <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../assets/img/curved-images/curved6.jpg')"></div> --}}

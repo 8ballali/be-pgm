@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $customer = Customer::all();
         $product = Product::all();
         $logged_in = Auth::id();
-        $finished_complaints = Complaint::where('status', 'Terselesaikan')->count();
+
         $booked_products = Product::where('status', 'Booked')->count();
         $available_products = Product::where('status', 'Available')->count();
         if (Auth::user()->role_id == 1) {
@@ -36,7 +36,7 @@ class DashboardController extends Controller
             $employee_name = Employee::all();
             $finished_memo = Memo::where('status', "Terselesaikan")->count();
             $total_complaints = Complaint::count();
-
+            $finished_complaints = Complaint::where('status', 'Terselesaikan')->count();
         }else {
             $employee_name = Employee::where('user_id', $logged_in)->select('name')->get();
             $name = $employee_name[0]->name;
@@ -49,8 +49,8 @@ class DashboardController extends Controller
             $category = Category::where('dept_id',$employee->dept_id)->get();
             // ngambil komplain berdasarkan id nya categories
             $complaints = Complaint::whereIn('category_id',$category->modelKeys())->get();
+            $finished_complaints = Complaint::whereIn('category_id',$category->modelKeys())->where('status', 'Terselesaikan')->count();
             $total_complaints = $complaints->count();
-
             $finished_memo = Memo::where([
                 ['employee_id_penerima','=',$employee->id],
                 ['status', '=', "Terselesaikan"]

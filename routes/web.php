@@ -43,6 +43,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 //employee
 
 Route::group(['middleware' => ['admin']], function () {
+    Route::GET('/pdf',[AdminBookingController::class,'exportPDF'])->name('booking.pdf');
     Route::GET('/dashboard',[DashboardController::class,'index']);
     Route::GET('/employee',[EmployeeController::class,'index']);
     Route::post('employee',[EmployeeController::class,'store'])->name('employee.store');
@@ -66,6 +67,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::put('/status-booking/edit/{status_id}',[StatusBookingController::class,'update'])->name('status.update');
     Route::delete('/status-booking/delete/{id}',[StatusBookingController::class,'destroy'])->name('status.destroy');
     Route::GET('/booking/bukti/download/{booking_id}',[AdminBookingController::class,'download'])->name('booking.download');
+    Route::GET('/complaint/tindak-lanjut/download/{complaint_id}',[ComplaintsController::class,'download_tindak_lanjut'])->name('bukti-complaint.download');
+    Route::GET('/complaint/bukti/download/{complaint_id}',[ComplaintsController::class,'downloadBukti'])->name('tindak-lanjut-complaint.download');
 });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

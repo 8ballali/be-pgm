@@ -15,52 +15,7 @@
     </div>
 </div>
 @endsection
-<!-- End Page -->
-<!-- Modal Add Employee -->
-<!-- Button Modal-->
-{{-- <button type="button" id="add" class=" btn btn-rounded" data-toggle="modal" data-target="#warning-header-modal">Add Complaint</button> --}}
-<!-- End Button Modal -->
-{{-- <div id="warning-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="warning-header-modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div id="modals" class="modal-header modal-colored-header ">
-        <h4 class="modal-title" id="warning-header-modalLabel">Add Complaint
-        </h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      </div>
-      <div class="modal-body">
-        <form role="form text-left" method="post" action="{{ route('category.store') }}" enctype="multipart/form-data">
-{{csrf_field()}}
-<div class="form-group">
-    <label for="message-text" class="col-form-label">Name</label>
-    <div>
-        <input type="text" class="form-control" name="name" placeholder="Name">
-    </div>
-</div>
-<div class="form-group">
-    <label for="message-text" class="col-form-label">Departemen</label>
-    <div>
-        <select name='dept_id' class='form-control'>
-            @foreach($department as $dept)
-            <option hidden value="">
-                <center>-- Pilih --</center>
-            </option>
-            <option value="{{$dept->id}}">{{$dept->name}}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
-<div class="form-group text-center">
-    <button id="btn" type="submit" class="btn btn-block">Submit</button>
-</div>
-</form>
-</div> --}}
-{{-- </div> --}}
-<!-- /.modal-content -->
-{{-- </div> --}}
-<!-- /.modal-dialog -->
-{{-- </div> --}}
-<!-- End Modal Add Employee -->
+
 <br>
 <br>
 <!-- Table Employee -->
@@ -105,11 +60,6 @@
                                         href="{{ route('history.download', $h->id) }}/" role="button">Download</a>
                                 </td>
                                 @endif
-                                {{-- @if ($h->bukti == null)
-                <td>Gambar belom di upload</td>
-                @elseif ($h->bukti)
-                <td><img src="{{asset('./storage/'.$h->bukti )}}" height="40px" width="40px" />
-                                @endif --}}
                                 <td>{{Carbon\Carbon::parse($h->updated_at)->format('d F Y')}}</td>
                                 <td class="d-flex flex-row">
                                     <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button"

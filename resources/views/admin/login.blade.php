@@ -41,9 +41,7 @@
         <!-- ============================================================== -->
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
             style="background-color:#F0F5F9;">
-            {{-- <div class="auth-box row"> --}}
-                {{-- <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url(../assets/images/big/gambarr.jpg;">
-                </div> --}}
+
 
                 <div class="col-lg-4 col-md-8 bg-white" style="border:1px solid transparant; border-radius: 20px;">
                     <div class="p-3">

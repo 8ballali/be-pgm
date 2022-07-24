@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Booking;
+use App\Models\Product;
 use App\Models\Employee;
 use App\Models\Department;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Product;
 use App\Models\status_booking;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class BookingController extends Controller
 {
@@ -48,5 +49,14 @@ class BookingController extends Controller
         $pathFile = storage_path('app\public/'. $download->bukti);
 
         return response()->download($pathFile);
+    }
+    public function exportPDF()
+    {
+        $booking = Booking::all();
+        $status = status_booking::get();
+        $employee = Employee::get();
+        $department = Department::all();
+        $pdf = PDF::loadView('admin.booking-pdf', ['booking' => $booking, 'employee' => $employee, 'department' => $department,'status' => $status]);
+        return $pdf->download('cetak-booking.pdf');
     }
 }

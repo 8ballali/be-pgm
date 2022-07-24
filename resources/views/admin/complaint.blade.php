@@ -73,11 +73,17 @@
                 <td>{{$c->deskripsi}}</td>
                 <td>{{$c->tanggal}}</td>
                 <td>{{$c->status}}</td>
-                <td><img src="{{asset('./storage/'.$c->bukti )}}" height="40px" width="40px" />
+                <td>
+                    <a class="fa fa-download" aria-hidden="true"
+                        href="{{ route('tindak-lanjut-complaint.download', $c->id) }}/" role="button">Download</a>
+                </td>
                 @if ($c->tindak_lanjut == null)
                 <td>Gambar belom di upload</td>
                 @elseif ($c->tindak_lanjut)
-                <td><img src="{{asset('./storage/'.$c->tindak_lanjut )}}" height="40px" width="40px" />
+                <td>
+                    <a class="fa fa-download" aria-hidden="true"
+                        href="{{ route('bukti-complaint.download', $c->id) }}/" role="button">Download</a>
+                </td>
                 @endif
                 <td>{{$c->feedback_score}}</td>
                 <td>{{$c->feedback_deskripsi}}</td>
@@ -125,22 +131,6 @@
                               <label><b>*Jika tidak ada kosongkan saja</b></label>
                             </div>
                           </div>
-                        {{-- <div class="form-group">
-                          <label for="message-text" class="col-form-label">Departemen</label>
-                          <div>
-                            <select name='dept_id' class='form-control'>
-                              @foreach($department as $dept)
-                              @if($dept->id == $c->dept_id)
-                              <option hidden value="{{$dept->id}}">
-                                <center>
-                                {{$dept->name}}
-                                </center>
-                              </option>
-                              @endif
-                              <option value="{{$dept->id}}">{{$dept->name}}</option>
-                              @endforeach
-                            </select>
-                          </div> --}}
                         </div>
                         <div class="form-group text-center">
                           <button id="btn" type="submit" class="btn btn-block">Submit</button>

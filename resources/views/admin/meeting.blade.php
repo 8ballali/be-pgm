@@ -105,15 +105,6 @@
                 <td>{{$m->judul}}</td>
                 <td>{{$m->notulensi}}</td>
                 <td>{{$m->employee->name}}</td>
-                {{-- <td>
-                  {{$c->departmen->name}}
-                  <!-- @foreach ($department as $dep)
-                  @if($dep->id == $c->dept_id)
-                  {{$dep->name}}
-                  @endif
-                  @endforeach -->
-
-                </td> --}}
                 <td>
                   <a id="edit" class="btn btn-circle btn-lg btn-warning edit" type="button" data-toggle="modal" data-target="#editModal{{$m->id }}">
                     <span class="btn-label"><i class="far fa-edit"></i></span>

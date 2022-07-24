@@ -200,22 +200,7 @@
                                                         <label><b>*Jika tidak ada kosongkan saja</b></label>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="form-group">
-                          <label for="message-text" class="col-form-label">Departemen</label>
-                          <div>
-                            <select name='dept_id' class='form-control'>
-                              @foreach($department as $dept)
-                              @if($dept->id == $c->dept_id)
-                              <option hidden value="{{$dept->id}}">
-                                                <center>
-                                                    {{$dept->name}}
-                                                </center>
-                                                </option>
-                                                @endif
-                                                <option value="{{$dept->id}}">{{$dept->name}}</option>
-                                                @endforeach
-                                                </select>
-                                        </div> --}}
+
                                     </div>
                                     <div class="form-group text-center">
                                         <button id="btn" type="submit" class="btn btn-block">Submit</button>
